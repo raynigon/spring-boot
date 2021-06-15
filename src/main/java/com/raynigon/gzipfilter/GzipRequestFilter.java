@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-class GzipRequestFilter implements Filter {
+public class GzipRequestFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(GzipRequestFilter.class);
 
