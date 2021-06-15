@@ -1,0 +1,12 @@
+release {
+
+    preTagCommitMessage = "[Release] Version:"
+    tagCommitMessage = "[Release] Version:"
+    newVersionCommitMessage = "[Release] Update Version:"
+    tagTemplate = 'v${version}'
+    buildTasks = ['publish']
+
+    git {
+        requireBranch = "release"
+    }
+}
