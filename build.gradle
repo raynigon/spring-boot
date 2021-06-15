@@ -1,5 +1,3 @@
-import org.w3c.dom.Node
-
 plugins {
     id 'java'
     id 'java-library'
@@ -73,7 +71,7 @@ publishing {
 
             artifact project.tasks.jar
             //artifact sourcesJar
-            //artifact javadocJar
+            // artifact javadocJar
 
             pom.withXml {
                 def rootNode = asNode()
