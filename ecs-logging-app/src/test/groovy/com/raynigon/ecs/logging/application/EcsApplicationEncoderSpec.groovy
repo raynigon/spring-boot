@@ -8,10 +8,9 @@ import ch.qos.logback.classic.spi.LoggingEvent
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
 
-
 class EcsApplicationEncoderSpec extends Specification {
 
-    private EcsApplicationEncoder encoder = new EcsApplicationEncoder()
+    private final EcsApplicationEncoder encoder = new EcsApplicationEncoder()
 
     def "encoding with minimal event"() {
         given:

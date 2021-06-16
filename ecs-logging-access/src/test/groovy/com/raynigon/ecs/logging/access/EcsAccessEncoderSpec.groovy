@@ -1,5 +1,6 @@
 package com.raynigon.ecs.logging.access
 
+import static com.raynigon.ecs.logging.LoggingConstants.SERVICE_NAME_PROPERTY
 import ch.qos.logback.access.spi.IAccessEvent
 import ch.qos.logback.access.spi.ServerAdapter
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -10,12 +11,9 @@ import spock.lang.Specification
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-import static com.raynigon.ecs.logging.LoggingConstants.SERVICE_NAME_PROPERTY
-
 class EcsAccessEncoderSpec extends Specification {
 
-
-    private EcsAccessEncoder encoder = new EcsAccessEncoder()
+    private final EcsAccessEncoder encoder = new EcsAccessEncoder()
 
     def "encoding with minimal event"() {
         given:
