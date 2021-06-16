@@ -1,0 +1,8 @@
+dependencies {
+    implementation(project(':ecs-logging-base'))
+    compileOnly("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-starter-web")
+
+    compileOnly("ch.qos.logback:logback-core")
+    testImplementation("ch.qos.logback:logback-core")
+}

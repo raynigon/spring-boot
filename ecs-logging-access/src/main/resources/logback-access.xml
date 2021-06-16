@@ -1,0 +1,10 @@
+<!-- Logging Configuration is applied only for Docker Images -->
+<configuration>
+
+    <appender name='accessJsonAppender' class='ch.qos.logback.core.ConsoleAppender'>
+        <encoder class='com.raynigon.ecs.logging.access.EcsAccessEncoder'/>
+    </appender>
+
+    <appender-ref ref='accessJsonAppender'/>
+
+</configuration>

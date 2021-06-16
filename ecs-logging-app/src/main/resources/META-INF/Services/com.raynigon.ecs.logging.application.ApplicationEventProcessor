@@ -1,0 +1,3 @@
+com.raynigon.ecs.logging.application.processor.MdcPropertyProcessor
+com.raynigon.ecs.logging.application.processor.ServiceNameProcessor
+com.raynigon.ecs.logging.application.processor.ThrowableProcessor

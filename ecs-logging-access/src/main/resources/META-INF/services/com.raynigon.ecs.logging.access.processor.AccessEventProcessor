@@ -1,0 +1,3 @@
+com.raynigon.ecs.logging.access.processor.CorrelationIdProcessor
+com.raynigon.ecs.logging.access.processor.ServiceNameProcessor
+com.raynigon.ecs.logging.access.processor.SourceAddressProcessor
