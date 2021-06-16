@@ -42,12 +42,11 @@ jobs:
       - name: Copy Assets
         run: |
           mkdir -p build/jars/
-          cp jackson-module/build/libs/*.jar build/jars/
-          cp jackson-starter/build/libs/*.jar build/jars/
-          cp jpa-starter/build/libs/*.jar build/jars/
-          cp springdoc-starter/build/libs/*.jar build/jars/
-          cp unit-api-core/build/libs/*.jar build/jars/
-          cp unit-api-kotlin/build/libs/*.jar build/jars/
+          cp ecs-logging-access/build/libs/*.jar build/jars/
+          cp ecs-logging-app/build/libs/*.jar build/jars/
+          cp ecs-logging-audit/build/libs/*.jar build/jars/
+          cp ecs-logging-base/build/libs/*.jar build/jars/
+          cp gzip-request-filter-starter/build/libs/*.jar build/jars/
       - id: content
         name: Create Release Content
         uses: raynigon/release-documentation@main
