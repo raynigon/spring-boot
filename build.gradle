@@ -1,9 +1,14 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
 plugins {
-    id 'java'
     id 'java-library'
     id 'signing'
     id 'maven-publish'
-    id 'org.springframework.boot' version '2.5.1'
+    id 'org.springframework.boot' version '2.5.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 
     // Auto Update Versions
@@ -14,110 +19,62 @@ plugins {
     id('net.researchgate.release') version '2.8.1'
 }
 
-group = "com.raynigon.spring-boot"
-java.sourceCompatibility = JavaVersion.VERSION_11
-
-repositories {
-    mavenCentral()
+allprojects {
+    group = 'com.raynigon.unit-api'
+    // version = project.version
+    sourceCompatibility = '1.8'
+    repositories {
+        mavenCentral()
+    }
 }
 
-dependencies {
-    compileOnly("org.springframework.boot:spring-boot-starter")
-    compileOnly("org.springframework.boot:spring-boot-starter-web")
+subprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java-library'
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'maven-publish'
+    apply plugin: 'jacoco'
+    apply plugin: 'signing'
+    apply plugin: 'net.researchgate.release'
 
-    testImplementation("org.springframework.boot:spring-boot-starter")
-    testImplementation("org.springframework.boot:spring-boot-starter-web")
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude group: "org.junit.vintage", module: "junit-vintage-engine"
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    compileJava.options.encoding = 'UTF-8'
+    compileTestJava.options.encoding = 'UTF-8'
+
+
+    apply from: "$rootDir/gradle/scripts/versionClass.gradle"
+    apply from: "$rootDir/gradle/scripts/javadoc.gradle"
+    apply from: "$rootDir/gradle/scripts/test.gradle"
+    apply from: "$rootDir/gradle/scripts/publishing.gradle"
+
+    bootJar {
+        enabled = false
     }
-    // testImplementation("org.spockframework:spock-spring")
+
+    jar {
+        enabled = true
+        classifier = ''
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += "build/generated/sources/version/java"
+        }
+    }
+
+    dependencies {
+        testImplementation 'org.codehaus.groovy:groovy:3.0.8'
+        testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
+        testImplementation 'org.spockframework:spock-core'
+        testRuntimeOnly "net.bytebuddy:byte-buddy:1.11.1"
+    }
 }
 
 bootJar {
     enabled = false
 }
 
-jar {
-    enabled = true
-    archiveClassifier = ''
-}
-
-
-signing {
-    required {
-        findProperty("signingKey") != null
-    }
-    String signingKey = findProperty("signingKey")
-    String signingPassword = findProperty("signingPassword")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "OSSRH" // OSS Repository Hosting
-            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = System.getenv("OSSRH_USERNAME") ?: null
-                password = System.getenv("OSSRH_PASSWORD") ?: null
-            }
-
-        }
-    }
-    publications {
-        basic(MavenPublication) {
-            artifactId = project.name
-
-            artifact project.tasks.jar
-            //artifact sourcesJar
-            // artifact javadocJar
-
-            pom.withXml {
-                def rootNode = asNode()
-                rootNode.children().last() + {
-                    resolveStrategy = Closure.DELEGATE_FIRST
-
-                    name project.name
-                    description "The ${project.name} is a part of the unit-api"
-                    url 'https://github.com/raynigon/spring-boot-gzip-request-filter'
-                    issueManagement {
-                        system 'GitHub'
-                        url 'https://github.com/raynigon/spring-boot-gzip-request-filter/issues'
-                    }
-                    licenses {
-                        license {
-                            name 'Apache-2.0'
-                            url 'https://opensource.org/licenses/Apache-2.0'
-                        }
-                    }
-                    scm {
-                        url 'https://github.com/raynigon/spring-boot-gzip-request-filter/'
-                        connection 'scm:git:git://github.com/raynigon/spring-boot-gzip-request-filter.git'
-                        developerConnection 'scm:git:ssh://git@github.com/raynigon/spring-boot-gzip-request-filter.git'
-                    }
-                    developers {
-                        developer {
-                            id 'raynigon'
-                            name 'Simon Schneider'
-                            email 'opensource@raynigon.de'
-                        }
-                    }
-                }
-
-                rootNode.remove((Node) ((Node) rootNode).get("dependencyManagement").get(0))
-                def dependenciesNode = rootNode.appendNode('dependencies')
-
-                def addDependency = { dependency, scope ->
-                    dependenciesNode.appendNode('dependency').with {
-                        appendNode('groupId', dependency.group)
-                        appendNode('artifactId', dependency.name)
-                        appendNode('version', dependency.version)
-                        appendNode('scope', scope)
-                    }
-                }
-                project.configurations.implementation.dependencies.each { addDependency(it, 'compile') }
-            }
-        }
-    }
-}
+apply from: "$rootDir/gradle/scripts/release.gradle"
