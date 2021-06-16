@@ -66,10 +66,20 @@ subprojects {
     }
 
     dependencies {
-        testImplementation 'org.codehaus.groovy:groovy:3.0.8'
-        testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
-        testImplementation 'org.spockframework:spock-core'
-        testRuntimeOnly "net.bytebuddy:byte-buddy:1.11.1"
+        // Commons Lang
+        implementation("org.apache.commons:commons-lang3:3.12.0")
+
+        // Spock
+        testImplementation(platform("org.spockframework:spock-bom:2.0-groovy-3.0"))
+        testImplementation("org.codehaus.groovy:groovy:3.0.8")
+        testImplementation("org.spockframework:spock-core")
+        testImplementation("org.spockframework:spock-spring")
+        testRuntimeOnly("net.bytebuddy:byte-buddy:1.11.1")
+
+        // Lombok
+        compileOnly("org.projectlombok:lombok:1.18.20")
+        testImplementation("org.projectlombok:lombok:1.18.20")
+        annotationProcessor("org.projectlombok:lombok:1.18.20")
     }
 }
 
