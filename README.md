@@ -1,2 +1,2 @@
-# spring-boot-gzip-request-filter
-GZip Request Filter for Spring Boot
+# Raynigon Spring Boot Libraries
+This repository contains some usefull libraries which can enhance your spring boot experience.
