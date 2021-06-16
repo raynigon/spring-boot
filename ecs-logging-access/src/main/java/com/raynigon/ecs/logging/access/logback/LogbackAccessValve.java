@@ -15,7 +15,9 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.UUID;
 
-import static com.raynigon.ecs.logging.LoggingConstants.*;
+import static com.raynigon.ecs.logging.LoggingConstants.SERVICE_NAME_PROPERTY;
+import static com.raynigon.ecs.logging.LoggingConstants.CORRELATION_ID_HEADER;
+import static com.raynigon.ecs.logging.LoggingConstants.CORRELATION_ID_PROPERTY;
 
 public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecycle {
 

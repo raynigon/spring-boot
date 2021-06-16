@@ -1,7 +1,6 @@
 package com.raynigon.ecs.logging.access.converter;
 
 import ch.qos.logback.access.spi.IAccessEvent;
-import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.raynigon.ecs.logging.access.event.EcsAccessLogEvent;
 import com.raynigon.ecs.logging.access.processor.AccessEventProcessor;
 import com.raynigon.ecs.logging.converter.EventConverter;

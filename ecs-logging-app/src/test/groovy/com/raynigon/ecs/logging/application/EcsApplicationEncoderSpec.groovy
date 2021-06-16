@@ -21,7 +21,7 @@ class EcsApplicationEncoderSpec extends Specification {
 
         when:
         def binaryResult = encoder.encode(event)
-        def result = (new ObjectMapper()).readValue(binaryResult, Map.class)
+        def result = (new ObjectMapper()).readValue(binaryResult, Map)
 
         then:
         result.containsKey("ecs.version")
