@@ -20,7 +20,7 @@ plugins {
 }
 
 allprojects {
-    group = 'com.raynigon.unit-api'
+    group = 'com.raynigon.spring-boot'
     // version = project.version
     sourceCompatibility = '1.8'
     repositories {
