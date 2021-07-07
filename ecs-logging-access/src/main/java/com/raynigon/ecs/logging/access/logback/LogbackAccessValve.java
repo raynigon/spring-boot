@@ -6,7 +6,6 @@ import com.raynigon.ecs.logging.access.event.EcsAccessEvent;
 import com.raynigon.ecs.logging.access.server.AccessValve;
 import lombok.SneakyThrows;
 import org.apache.catalina.Lifecycle;
-import org.apache.catalina.LifecycleState;
 import org.apache.catalina.Valve;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
@@ -17,13 +16,10 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.UUID;
 
-import static com.raynigon.ecs.logging.LoggingConstants.SERVICE_NAME_PROPERTY;
-import static com.raynigon.ecs.logging.LoggingConstants.CORRELATION_ID_HEADER;
-import static com.raynigon.ecs.logging.LoggingConstants.CORRELATION_ID_PROPERTY;
+import static com.raynigon.ecs.logging.LoggingConstants.*;
 
 public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecycle {
 
-    private boolean started = false;
     private final IAccessLogContext context;
     private boolean requestAttributesEnabled = true;
 
@@ -65,15 +61,10 @@ public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecy
         MDC.remove(CORRELATION_ID_PROPERTY);
     }
 
-    public boolean isStarted() {
-        return started;
-    }
-
     @Override
     @SneakyThrows
     protected synchronized void startInternal() {
         context.start();
-        started = true;
         super.startInternal();
     }
 
@@ -81,7 +72,6 @@ public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecy
     @SneakyThrows
     protected synchronized void stopInternal() {
         context.stop();
-        started = false;
         super.stopInternal();
     }
 }

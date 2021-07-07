@@ -4,5 +4,6 @@ dependencies {
     compileOnly("org.springframework.boot:spring-boot-starter-web")
 
     testImplementation("ch.qos.logback:logback-access")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-web")
 }
