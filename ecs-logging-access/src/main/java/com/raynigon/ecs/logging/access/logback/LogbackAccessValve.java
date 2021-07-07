@@ -4,7 +4,9 @@ import ch.qos.logback.access.tomcat.TomcatServerAdapter;
 import com.raynigon.ecs.logging.access.context.IAccessLogContext;
 import com.raynigon.ecs.logging.access.event.EcsAccessEvent;
 import com.raynigon.ecs.logging.access.server.AccessValve;
+import lombok.SneakyThrows;
 import org.apache.catalina.Lifecycle;
+import org.apache.catalina.LifecycleState;
 import org.apache.catalina.Valve;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
@@ -63,16 +65,20 @@ public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecy
     }
 
     @Override
+    @SneakyThrows
     protected synchronized void startInternal() {
         if (context instanceof AccessLogContext && ((AccessLogContext) context).isStarted())
             return;
         context.start();
+        setState(LifecycleState.STARTED);
     }
 
     @Override
+    @SneakyThrows
     protected synchronized void stopInternal() {
         if (context instanceof AccessLogContext && !((AccessLogContext) context).isStarted())
             return;
         context.stop();
+        setState(LifecycleState.STOPPED);
     }
 }
