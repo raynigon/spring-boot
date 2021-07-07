@@ -8,6 +8,6 @@ dependencies {
     }
 
     // Jackson
-    compileOnly("com.fasterxml.jackson.core:jackson-databind:2.12.3")
+    compileOnly("com.fasterxml.jackson.core:jackson-databind:2.12.4")
     compileOnly("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
 }
