@@ -23,6 +23,7 @@ import static com.raynigon.ecs.logging.LoggingConstants.CORRELATION_ID_PROPERTY;
 
 public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecycle {
 
+    private boolean started = false;
     private final IAccessLogContext context;
     private boolean requestAttributesEnabled = true;
 
@@ -64,17 +65,23 @@ public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecy
         MDC.remove(CORRELATION_ID_PROPERTY);
     }
 
+    public boolean isStarted() {
+        return started;
+    }
+
     @Override
     @SneakyThrows
     protected synchronized void startInternal() {
         context.start();
-        setState(LifecycleState.STARTED);
+        started = true;
+        super.startInternal();
     }
 
     @Override
     @SneakyThrows
     protected synchronized void stopInternal() {
         context.stop();
-        setState(LifecycleState.STOPPED);
+        started = false;
+        super.stopInternal();
     }
 }
