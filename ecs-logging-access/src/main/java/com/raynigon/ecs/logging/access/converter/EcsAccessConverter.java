@@ -3,6 +3,9 @@ package com.raynigon.ecs.logging.access.converter;
 import ch.qos.logback.access.spi.IAccessEvent;
 import com.raynigon.ecs.logging.access.event.EcsAccessLogEvent;
 import com.raynigon.ecs.logging.access.processor.AccessEventProcessor;
+import com.raynigon.ecs.logging.access.processor.CorrelationIdProcessor;
+import com.raynigon.ecs.logging.access.processor.ServiceNameProcessor;
+import com.raynigon.ecs.logging.access.processor.SourceAddressProcessor;
 import com.raynigon.ecs.logging.converter.EventConverter;
 import com.raynigon.ecs.logging.converter.EventConverterHelper;
 import org.springframework.http.HttpHeaders;
@@ -19,10 +22,11 @@ public class EcsAccessConverter implements EventConverter<IAccessEvent, EcsAcces
     private final List<AccessEventProcessor> processors;
 
     public EcsAccessConverter() {
-        processors = ServiceLoader.load(AccessEventProcessor.class)
-                .stream()
-                .map(ServiceLoader.Provider::get)
-                .collect(Collectors.toList());
+        processors = List.of(
+                new CorrelationIdProcessor(),
+                new ServiceNameProcessor(),
+                new SourceAddressProcessor()
+        );
     }
 
     @Override
