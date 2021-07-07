@@ -3,6 +3,9 @@ package com.raynigon.ecs.logging.application.converter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.raynigon.ecs.logging.application.event.EcsApplicationLogEvent;
 import com.raynigon.ecs.logging.application.processor.ApplicationEventProcessor;
+import com.raynigon.ecs.logging.application.processor.MdcPropertyProcessor;
+import com.raynigon.ecs.logging.application.processor.ServiceNameProcessor;
+import com.raynigon.ecs.logging.application.processor.ThrowableProcessor;
 import com.raynigon.ecs.logging.converter.EventConverter;
 import com.raynigon.ecs.logging.converter.EventConverterHelper;
 
@@ -10,18 +13,17 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
-import java.util.ServiceLoader;
-import java.util.stream.Collectors;
 
 public class EcsApplicationConverter implements EventConverter<ILoggingEvent, EcsApplicationLogEvent> {
 
     private final List<ApplicationEventProcessor> processors;
 
     public EcsApplicationConverter() {
-        processors = ServiceLoader.load(ApplicationEventProcessor.class)
-                .stream()
-                .map(ServiceLoader.Provider::get)
-                .collect(Collectors.toList());
+        processors = List.of(
+                new MdcPropertyProcessor(),
+                new ServiceNameProcessor(),
+                new ThrowableProcessor()
+        );
     }
 
     @Override
