@@ -36,10 +36,10 @@ publishing {
 
                     name project.name
                     description "The ${project.name} is a part of the unit-api"
-                    url 'https://unit-api.raynigon.com/'
+                    url 'https://github.com/raynigon/spring-boot/'
                     issueManagement {
                         system 'GitHub'
-                        url 'https://github.com/raynigon/unit-api/issues'
+                        url 'https://github.com/raynigon/spring-boot/issues'
                     }
                     licenses {
                         license {
@@ -48,9 +48,9 @@ publishing {
                         }
                     }
                     scm {
-                        url 'https://github.com/raynigon/unit-api/'
-                        connection 'scm:git:git://github.com/raynigon/unit-api.git'
-                        developerConnection 'scm:git:ssh://git@github.com/raynigon/unit-api.git'
+                        url 'https://github.com/raynigon/spring-boot/'
+                        connection 'scm:git:git://github.com/raynigon/spring-boot.git'
+                        developerConnection 'scm:git:ssh://git@github.com/raynigon/spring-boot.git'
                     }
                     developers {
                         developer {

@@ -64,11 +64,15 @@ public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecy
 
     @Override
     protected synchronized void startInternal() {
+        if (context instanceof AccessLogContext && ((AccessLogContext) context).isStarted())
+            return;
         context.start();
     }
 
     @Override
     protected synchronized void stopInternal() {
+        if (context instanceof AccessLogContext && !((AccessLogContext) context).isStarted())
+            return;
         context.stop();
     }
 }
