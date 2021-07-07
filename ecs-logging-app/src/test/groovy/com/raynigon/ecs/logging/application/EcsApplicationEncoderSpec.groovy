@@ -8,6 +8,8 @@ import ch.qos.logback.classic.spi.LoggingEvent
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
 
+import static com.raynigon.ecs.logging.LoggingConstants.SERVICE_NAME_PROPERTY
+
 class EcsApplicationEncoderSpec extends Specification {
 
     private final EcsApplicationEncoder encoder = new EcsApplicationEncoder()
@@ -15,6 +17,7 @@ class EcsApplicationEncoderSpec extends Specification {
     def "encoding with minimal event"() {
         given:
         LoggerContext context = new LoggerContext()
+        context.putProperty(SERVICE_NAME_PROPERTY, "my-service")
         Logger logger = new Logger("logger.class", null, context)
         ILoggingEvent event = new LoggingEvent("logger.class", logger, Level.INFO, "", null, null)
 
@@ -32,6 +35,6 @@ class EcsApplicationEncoderSpec extends Specification {
         and:
         result["ecs.version"] == "1.7"
         result["event.dataset"] == "application"
-        result["service.name"] == "spring-application"
+        result["service.name"] == "my-service"
     }
 }
