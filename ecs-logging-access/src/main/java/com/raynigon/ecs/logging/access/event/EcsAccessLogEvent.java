@@ -1,11 +1,13 @@
 package com.raynigon.ecs.logging.access.event;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.raynigon.ecs.logging.event.EcsLogEvent;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
 
 import static com.raynigon.ecs.logging.LoggingConstants.ECS_VERSION;
@@ -53,4 +55,13 @@ public final class EcsAccessLogEvent implements EcsLogEvent {
 
     @JsonProperty("user_agent.original")
     private final String userAgent;
+
+    @JsonIgnore
+    private final Duration duration;
+
+    @JsonProperty("event.duration")
+    public Long getDuration() {
+        if (duration == null) return null;
+        return duration.toMillis();
+    }
 }

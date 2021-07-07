@@ -14,6 +14,7 @@ import org.slf4j.MDC;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.UUID;
 
 import static com.raynigon.ecs.logging.LoggingConstants.*;
@@ -31,7 +32,7 @@ public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecy
     @Override
     public void log(Request request, Response response, long time) {
         TomcatServerAdapter adapter = new TomcatServerAdapter(request, response);
-        EcsAccessEvent event = new EcsAccessEvent(request, response, adapter, context);
+        EcsAccessEvent event = new EcsAccessEvent(request, response, adapter, context, Duration.ofMillis(time));
         context.appendEvent(event);
     }
 
