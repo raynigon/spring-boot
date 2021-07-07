@@ -1,5 +1,7 @@
 package com.raynigon.ecs.logging.access
 
+import java.time.Duration
+
 import static com.raynigon.ecs.logging.LoggingConstants.SERVICE_NAME_PROPERTY
 import ch.qos.logback.access.spi.IAccessEvent
 import ch.qos.logback.access.spi.ServerAdapter
@@ -21,7 +23,7 @@ class EcsAccessEncoderSpec extends Specification {
         HttpServletResponse response = Mock()
         ServerAdapter adapter = Mock()
         IAccessLogContext context = Mock()
-        IAccessEvent event = new EcsAccessEvent(request, response, adapter, context)
+        IAccessEvent event = new EcsAccessEvent(request, response, adapter, context, Duration.ZERO)
 
         and:
         adapter.buildResponseHeaderMap() >> Map.of()
