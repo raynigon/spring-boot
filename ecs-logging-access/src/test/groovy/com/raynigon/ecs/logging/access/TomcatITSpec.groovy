@@ -1,5 +1,7 @@
 package com.raynigon.ecs.logging.access
 
+import static com.raynigon.ecs.logging.LoggingConstants.*
+
 import com.raynigon.ecs.logging.access.server.TomcatAccessLogConfiguration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
@@ -12,8 +14,6 @@ import org.springframework.util.MultiValueMap
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
-
-import static com.raynigon.ecs.logging.LoggingConstants.*
 
 @EnableAutoConfiguration
 @ContextConfiguration(classes = TomcatAccessLogConfiguration)
