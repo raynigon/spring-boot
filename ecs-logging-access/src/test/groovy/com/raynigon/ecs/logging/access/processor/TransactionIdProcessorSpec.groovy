@@ -13,7 +13,7 @@ class TransactionIdProcessorSpec extends Specification {
     def "transaction id is given"() {
         given:
         IAccessEvent event = Mock()
-        event.getRequestHeader(_ as String) >> "test 123"
+        event.getResponseHeader(_ as String) >> "test 123"
 
         and:
         EcsAccessLogEvent result = EcsAccessLogEvent.builder().build()
@@ -22,6 +22,6 @@ class TransactionIdProcessorSpec extends Specification {
         result = processor.process(result, event)
 
         then:
-        result.sessionId == "test 123"
+        result.transactionId == "test 123"
     }
 }
