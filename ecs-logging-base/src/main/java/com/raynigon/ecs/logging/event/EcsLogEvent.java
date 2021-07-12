@@ -12,5 +12,7 @@ public interface EcsLogEvent {
 
     String getEventDataset();
 
-    String getTraceId();
+    String getTransactionId();
+
+    String getSessionId();
 }
