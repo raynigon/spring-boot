@@ -48,18 +48,22 @@ public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecy
 
     @Override
     public void invoke(Request request, Response response) throws IOException, ServletException {
-        String correlationId = request.getHeader(CORRELATION_ID_HEADER);
+        String correlationId = request.getHeader(TRANSACTION_ID_HEADER);
         if (correlationId == null)
             correlationId = UUID.randomUUID().toString();
+        response.addHeader(TRANSACTION_ID_HEADER, correlationId);
 
-        response.addHeader(CORRELATION_ID_HEADER, correlationId);
-
-        MDC.put(CORRELATION_ID_PROPERTY, correlationId);
+        MDC.put(TRANSACTION_ID_PROPERTY, correlationId);
+        String sessionId = request.getHeader(SESSION_ID_HEADER);
+        if (sessionId != null)
+            MDC.put(SESSION_ID_PROPERTY, sessionId);
         Valve next = getNext();
         if (next != null) {
             next.invoke(request, response);
         }
-        MDC.remove(CORRELATION_ID_PROPERTY);
+        if (sessionId != null)
+            MDC.remove(SESSION_ID_PROPERTY);
+        MDC.remove(TRANSACTION_ID_PROPERTY);
     }
 
     @Override

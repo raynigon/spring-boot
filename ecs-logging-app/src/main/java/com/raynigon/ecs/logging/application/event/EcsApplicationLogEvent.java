@@ -27,8 +27,11 @@ public class EcsApplicationLogEvent implements EcsLogEvent {
     @JsonProperty("service.name")
     private final String serviceName;
 
-    @JsonProperty("trace.id")
-    private final String traceId;
+    @JsonProperty("transaction.id")
+    private final String transactionId;
+
+    @JsonProperty("session.id")
+    private final String sessionId;
 
     @JsonProperty("message")
     private final String message;

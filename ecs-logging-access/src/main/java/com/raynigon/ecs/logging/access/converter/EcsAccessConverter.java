@@ -5,7 +5,6 @@ import com.raynigon.ecs.logging.access.event.EcsAccessLogEvent;
 import com.raynigon.ecs.logging.access.processor.*;
 import com.raynigon.ecs.logging.converter.EventConverter;
 import com.raynigon.ecs.logging.converter.EventConverterHelper;
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpHeaders;
 
 import java.time.Instant;
@@ -19,11 +18,12 @@ public class EcsAccessConverter implements EventConverter<IAccessEvent, EcsAcces
 
     public EcsAccessConverter() {
         processors = List.of(
-                new CorrelationIdProcessor(),
                 new DurationProcessor(),
                 new ResponseSizeProcessor(),
                 new ServiceNameProcessor(),
-                new SourceAddressProcessor()
+                new SessionIdProcessor(),
+                new SourceAddressProcessor(),
+                new TransactionIdProcessor()
         );
     }
 
