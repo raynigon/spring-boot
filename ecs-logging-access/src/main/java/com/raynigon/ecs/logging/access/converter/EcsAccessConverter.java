@@ -31,7 +31,7 @@ public class EcsAccessConverter implements EventConverter<IAccessEvent, EcsAcces
     public EcsAccessLogEvent convert(IAccessEvent event) {
         EcsAccessLogEvent result = EcsAccessLogEvent.builder()
                 .timestamp(OffsetDateTime.ofInstant(Instant.ofEpochMilli(event.getTimeStamp()), ZoneOffset.UTC))
-                .sourceAddress(event.getRemoteAddr())
+                .clientAddress(event.getRemoteAddr())
                 .userName(event.getRemoteUser())
                 .requestMethod(event.getMethod())
                 .urlPath(event.getRequest().getRequestURI())

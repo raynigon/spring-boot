@@ -35,8 +35,8 @@ public final class EcsAccessLogEvent implements EcsLogEvent {
     @JsonProperty("session.id")
     private final String sessionId;
 
-    @JsonProperty("source.address")
-    private final String sourceAddress;
+    @JsonProperty("client.address")
+    private final String clientAddress;
 
     @JsonProperty("user.name")
     private final String userName;
