@@ -8,6 +8,6 @@ public class SourceAddressProcessor implements AccessEventProcessor {
     public EcsAccessLogEvent process(EcsAccessLogEvent result, IAccessEvent event) {
         String xForwardForHeader = event.getRequestHeader("X-Forwarded-For");
         String sourceAddress = xForwardForHeader != null ? xForwardForHeader : event.getRemoteAddr();
-        return result.toBuilder().sourceAddress(sourceAddress).build();
+        return result.toBuilder().clientAddress(sourceAddress).build();
     }
 }
