@@ -8,11 +8,11 @@ plugins {
     id 'java-library'
     id 'signing'
     id 'maven-publish'
-    id 'org.springframework.boot' version '2.5.5'
+    id 'org.springframework.boot' version '2.6.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 
     // Auto Update Versions
-    id 'se.patrikerdes.use-latest-versions' version '0.2.17'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.18'
     id 'com.github.ben-manes.versions' version '0.39.0'
 
     // Auto Release
@@ -74,10 +74,10 @@ subprojects {
         testImplementation("org.codehaus.groovy:groovy:3.0.9")
         testImplementation("org.spockframework:spock-core")
         testImplementation("org.spockframework:spock-spring")
-        testRuntimeOnly("net.bytebuddy:byte-buddy:1.11.18")
+        testRuntimeOnly("net.bytebuddy:byte-buddy:1.12.3")
 
         // Lombok
-        compileOnly("org.projectlombok:lombok:1.18.20")
+        compileOnly("org.projectlombok:lombok:1.18.22")
         testImplementation("org.projectlombok:lombok:1.18.20")
         annotationProcessor("org.projectlombok:lombok:1.18.20")
     }
