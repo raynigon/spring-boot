@@ -1,6 +1,7 @@
 package com.raynigon.ecs.logging.access.logback;
 
 import ch.qos.logback.access.tomcat.TomcatServerAdapter;
+import com.raynigon.ecs.logging.access.AccessLogProperties;
 import com.raynigon.ecs.logging.access.context.IAccessLogContext;
 import com.raynigon.ecs.logging.access.event.EcsAccessEvent;
 import com.raynigon.ecs.logging.access.server.AccessValve;
@@ -15,22 +16,29 @@ import org.slf4j.MDC;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Objects;
 import java.util.UUID;
 
 import static com.raynigon.ecs.logging.LoggingConstants.*;
 
 public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecycle {
 
+    private final AccessLogProperties config;
     private final IAccessLogContext context;
     private boolean requestAttributesEnabled = true;
 
-    public LogbackAccessValve(String serviceName) {
-        context = new AccessLogContext();
+    public LogbackAccessValve(AccessLogProperties config, String serviceName) {
+        Objects.requireNonNull(config);
+        this.config = config;
+        context = new AccessLogContext(config);
         context.putProperty(SERVICE_NAME_PROPERTY, serviceName);
     }
 
     @Override
     public void log(Request request, Response response, long time) {
+        if (config.getExcludeEndpoints().contains(request.getRequestURI())) {
+            return;
+        }
         TomcatServerAdapter adapter = new TomcatServerAdapter(request, response);
         EcsAccessEvent event = new EcsAccessEvent(request, response, adapter, context, Duration.ofMillis(time));
         context.appendEvent(event);
