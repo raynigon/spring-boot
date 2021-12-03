@@ -33,10 +33,8 @@ public class EcsAccessConverter implements EventConverter<IAccessEvent, EcsAcces
                 new SourceAddressProcessor(),
                 new TransactionIdProcessor()
         ));
-        if (properties != null) {
-            if (properties.isExportBody()) {
-                processors.add(new BodyProcessor());
-            }
+        if (properties != null && properties.isExportBody()) {
+            processors.add(new BodyProcessor());
         }
     }
 
