@@ -1,19 +1,14 @@
 package com.raynigon.ecs.logging.access.client;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.UUID;
-
-import static com.raynigon.ecs.logging.LoggingConstants.*;
 
 @Configuration
 @RequiredArgsConstructor
