@@ -1,6 +1,9 @@
 package com.raynigon.ecs.logging.access.converter;
 
 import ch.qos.logback.access.spi.IAccessEvent;
+import ch.qos.logback.core.Context;
+import com.raynigon.ecs.logging.access.AccessLogProperties;
+import com.raynigon.ecs.logging.access.context.IAccessLogContext;
 import com.raynigon.ecs.logging.access.event.EcsAccessLogEvent;
 import com.raynigon.ecs.logging.access.processor.*;
 import com.raynigon.ecs.logging.converter.EventConverter;
@@ -10,21 +13,29 @@ import org.springframework.http.HttpHeaders;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EcsAccessConverter implements EventConverter<IAccessEvent, EcsAccessLogEvent> {
 
     private final List<AccessEventProcessor> processors;
 
-    public EcsAccessConverter() {
-        processors = List.of(
+    public EcsAccessConverter(Context context) {
+        AccessLogProperties properties = null;
+        if (context instanceof IAccessLogContext) {
+            properties = ((IAccessLogContext) context).getConfig();
+        }
+        processors = new ArrayList<>(List.of(
                 new DurationProcessor(),
                 new ResponseSizeProcessor(),
                 new ServiceNameProcessor(),
                 new SessionIdProcessor(),
                 new SourceAddressProcessor(),
                 new TransactionIdProcessor()
-        );
+        ));
+        if (properties != null && properties.isExportBody()) {
+            processors.add(new BodyProcessor());
+        }
     }
 
     @Override
