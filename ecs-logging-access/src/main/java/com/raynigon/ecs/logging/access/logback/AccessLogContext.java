@@ -13,6 +13,7 @@ import ch.qos.logback.core.spi.LogbackLock;
 import ch.qos.logback.core.status.StatusManager;
 import ch.qos.logback.core.util.ExecutorServiceUtil;
 import ch.qos.logback.core.util.StatusPrinter;
+import com.raynigon.ecs.logging.access.AccessLogProperties;
 import com.raynigon.ecs.logging.access.context.IAccessLogContext;
 import com.raynigon.ecs.logging.access.event.EcsAccessEvent;
 
@@ -24,6 +25,7 @@ import java.util.concurrent.ScheduledFuture;
 
 public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, AppenderAttachable<IAccessEvent> {
 
+    private final AccessLogProperties config;
     private final long birthTime;
     private final LogbackLock configurationLock;
     private final LifeCycleManager lifeCycleManager;
@@ -37,15 +39,17 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
     private String contextName;
     private boolean started;
 
-    public AccessLogContext() {
-        this("access-log", AccessLogContext.class.getResource("/logback-access.xml"), new AppenderAttachableImpl<>());
+    public AccessLogContext(AccessLogProperties config) {
+        this(config, "access-log", AccessLogContext.class.getResource("/logback-access.xml"), new AppenderAttachableImpl<>());
     }
 
-    public AccessLogContext(String contextName, URL configLocation, AppenderAttachableImpl<IAccessEvent> appenderContainer) {
+    public AccessLogContext(AccessLogProperties config, String contextName, URL configLocation, AppenderAttachableImpl<IAccessEvent> appenderContainer) {
         super();
+        Objects.requireNonNull(config);
         Objects.requireNonNull(contextName);
         Objects.requireNonNull(configLocation);
         Objects.requireNonNull(appenderContainer);
+        this.config = config;
         this.contextName = contextName;
         this.configLocation = configLocation;
         this.appenderContainer = appenderContainer;
@@ -55,6 +59,11 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
         this.statusManager = new BasicStatusManager();
         this.properties = new HashMap<>();
         this.objects = new HashMap<>();
+    }
+
+    @Override
+    public AccessLogProperties getConfig() {
+        return config;
     }
 
     public final void appendEvent(EcsAccessEvent event) {
