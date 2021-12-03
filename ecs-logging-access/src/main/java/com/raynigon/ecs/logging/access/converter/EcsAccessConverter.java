@@ -5,7 +5,6 @@ import ch.qos.logback.core.Context;
 import com.raynigon.ecs.logging.access.AccessLogProperties;
 import com.raynigon.ecs.logging.access.context.IAccessLogContext;
 import com.raynigon.ecs.logging.access.event.EcsAccessLogEvent;
-import com.raynigon.ecs.logging.access.logback.AccessLogContext;
 import com.raynigon.ecs.logging.access.processor.*;
 import com.raynigon.ecs.logging.converter.EventConverter;
 import com.raynigon.ecs.logging.converter.EventConverterHelper;

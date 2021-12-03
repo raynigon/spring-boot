@@ -59,6 +59,12 @@ public final class EcsAccessLogEvent implements EcsLogEvent {
     @JsonProperty("user_agent.original")
     private final String userAgent;
 
+    @JsonProperty("http.request.body.content")
+    private final String requestBody;
+
+    @JsonProperty("http.response.body.content")
+    private final String responseBody;
+
     @JsonIgnore
     private final Duration duration;
 
@@ -68,9 +74,5 @@ public final class EcsAccessLogEvent implements EcsLogEvent {
         return duration.toMillis();
     }
 
-    @JsonProperty("http.request.body.content")
-    private final String requestBody;
 
-    @JsonProperty("http.response.body.content")
-    private final String responseBody;
 }
