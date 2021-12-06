@@ -8,7 +8,13 @@ import com.raynigon.ecs.logging.access.event.EcsAccessLogEvent;
 
 public class EcsAccessEncoder extends EncoderBase<IAccessEvent> {
 
-    private final EcsEncoder<IAccessEvent, EcsAccessLogEvent> encoder = new EcsEncoder<>(new EcsAccessConverter(getContext()));
+    private final EcsEncoder<IAccessEvent, EcsAccessLogEvent> encoder = new EcsEncoder<>(new EcsAccessConverter());
+
+    @Override
+    public void start() {
+        super.start();
+        encoder.setupLogback(getContext());
+    }
 
     @Override
     public byte[] encode(IAccessEvent event) {

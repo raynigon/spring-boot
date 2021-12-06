@@ -2,6 +2,7 @@ package com.raynigon.ecs.logging.access.server;
 
 import com.raynigon.ecs.logging.access.AccessLogProperties;
 import com.raynigon.ecs.logging.access.logback.LogbackAccessValve;
+import lombok.RequiredArgsConstructor;
 import org.apache.catalina.Server;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -18,6 +19,7 @@ import org.springframework.core.annotation.Order;
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @AutoConfigureBefore(ServletWebServerFactoryAutoConfiguration.class)
 @ConditionalOnClass(value = {Server.class, WebServerFactoryCustomizer.class})
@@ -27,11 +29,7 @@ public class TomcatAccessLogConfiguration {
     @Value("${spring.application.name}")
     private String applicationName;
 
-    private AccessLogProperties config;
-
-    TomcatAccessLogConfiguration(AccessLogProperties config) {
-        this.config = config;
-    }
+    private final AccessLogProperties config;
 
     @Bean
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> tomcatAccessLogCustomizer(List<AccessValve> accessValves) {

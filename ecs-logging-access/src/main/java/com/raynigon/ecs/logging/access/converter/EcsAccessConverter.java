@@ -8,6 +8,7 @@ import com.raynigon.ecs.logging.access.event.EcsAccessLogEvent;
 import com.raynigon.ecs.logging.access.processor.*;
 import com.raynigon.ecs.logging.converter.EventConverter;
 import com.raynigon.ecs.logging.converter.EventConverterHelper;
+import com.raynigon.ecs.logging.converter.LogbackConverter;
 import org.springframework.http.HttpHeaders;
 
 import java.time.Instant;
@@ -16,15 +17,11 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EcsAccessConverter implements EventConverter<IAccessEvent, EcsAccessLogEvent> {
+public class EcsAccessConverter implements EventConverter<IAccessEvent, EcsAccessLogEvent>, LogbackConverter {
 
     private final List<AccessEventProcessor> processors;
 
-    public EcsAccessConverter(Context context) {
-        AccessLogProperties properties = null;
-        if (context instanceof IAccessLogContext) {
-            properties = ((IAccessLogContext) context).getConfig();
-        }
+    public EcsAccessConverter() {
         processors = new ArrayList<>(List.of(
                 new DurationProcessor(),
                 new ResponseSizeProcessor(),
@@ -33,7 +30,19 @@ public class EcsAccessConverter implements EventConverter<IAccessEvent, EcsAcces
                 new SourceAddressProcessor(),
                 new TransactionIdProcessor()
         ));
-        if (properties != null && properties.isExportBody()) {
+
+    }
+
+    @Override
+    public void setup(Context context) {
+        if (!(context instanceof IAccessLogContext)) {
+            return;
+        }
+        AccessLogProperties properties = ((IAccessLogContext) context).getConfig();
+        if (properties == null) {
+            return;
+        }
+        if (properties.isExportBody()) {
             processors.add(new BodyProcessor());
         }
     }
