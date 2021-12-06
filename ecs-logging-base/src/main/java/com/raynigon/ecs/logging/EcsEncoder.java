@@ -1,10 +1,12 @@
 package com.raynigon.ecs.logging;
 
+import ch.qos.logback.core.Context;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.raynigon.ecs.logging.converter.EventConverter;
+import com.raynigon.ecs.logging.converter.LogbackConverter;
 import com.raynigon.ecs.logging.event.EcsLogEvent;
 import lombok.SneakyThrows;
 
@@ -22,6 +24,12 @@ public class EcsEncoder<I, O extends EcsLogEvent> {
         this.objectMapper.registerModule(new JavaTimeModule());
         this.objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         this.objectMapper.setDateFormat((new StdDateFormat()).withColonInTimeZone(true));
+    }
+
+    public void setupLogback(Context context) {
+        if (converter instanceof LogbackConverter) {
+            ((LogbackConverter) converter).setup(context);
+        }
     }
 
     public byte[] encode(I event) {
