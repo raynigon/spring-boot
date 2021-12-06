@@ -2,7 +2,6 @@ package com.raynigon.ecs.logging.access.helper
 
 import ch.qos.logback.access.spi.IAccessEvent
 import com.raynigon.ecs.logging.access.EcsAccessEncoder
-import lombok.Getter
 
 import java.time.Instant
 
@@ -43,7 +42,7 @@ class RecordingEcsAccessEncoder extends EcsAccessEncoder {
             this.result = result
         }
 
-        byte[] getResult(){
+        byte[] getResult() {
             return result
         }
     }
