@@ -1,6 +1,7 @@
 package com.raynigon.ecs.logging.async;
 
 import com.raynigon.ecs.logging.async.executor.MdcForkJoinPool;
+import com.raynigon.ecs.logging.async.scheduler.MdcScheduledExecutorService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
@@ -18,7 +19,6 @@ public class MdcExecutorConfiguration {
 
     @Bean
     public TaskScheduler mdcTaskScheduler() {
-        ConcurrentTaskScheduler scheduler = new ConcurrentTaskScheduler();
-        return scheduler;
+        return new MdcScheduledExecutorService(new ConcurrentTaskScheduler());
     }
 }

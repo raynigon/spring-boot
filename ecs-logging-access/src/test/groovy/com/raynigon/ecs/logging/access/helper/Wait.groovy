@@ -5,7 +5,7 @@ import java.time.Duration
 
 class Wait {
 
-    public static boolean wait(Duration timeout, Closure<Boolean> action) {
+    static boolean wait(Duration timeout, Closure<Boolean> action) {
         def start = System.currentTimeMillis()
         while (System.currentTimeMillis() - start < timeout.toMillis()) {
             if (action()) {
