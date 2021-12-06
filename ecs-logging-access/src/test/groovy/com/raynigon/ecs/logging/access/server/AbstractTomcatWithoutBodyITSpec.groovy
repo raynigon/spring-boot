@@ -13,11 +13,16 @@ import java.time.Duration
 
 @DirtiesContext
 @EnableAutoConfiguration
-@ContextConfiguration(classes = [TomcatAccessLogConfiguration.class, EchoController.class])
+@ContextConfiguration(classes = [TomcatAccessLogConfiguration, EchoController])
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = [
         "spring.application.name=my-test-app"
 ])
 class AbstractTomcatWithoutBodyITSpec extends AbstractTomcatSpec {
+
+    @Override
+    void prepare() {
+        RecordingEcsAccessEncoder.clearRecords()
+    }
 
     def "http call without headers"() {
         given:

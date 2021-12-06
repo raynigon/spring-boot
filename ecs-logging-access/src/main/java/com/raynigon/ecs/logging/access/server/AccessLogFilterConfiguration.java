@@ -2,7 +2,6 @@ package com.raynigon.ecs.logging.access.server;
 
 import ch.qos.logback.access.servlet.TeeFilter;
 import com.raynigon.ecs.logging.access.AccessLogProperties;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

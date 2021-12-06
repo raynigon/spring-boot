@@ -1,5 +1,8 @@
 package com.raynigon.ecs.logging.access.server
 
+import static com.raynigon.ecs.logging.LoggingConstants.SESSION_ID_HEADER
+import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_HEADER
+
 import com.raynigon.ecs.logging.access.helper.RecordingEcsAccessEncoder
 import com.raynigon.ecs.logging.access.helper.Wait
 import org.springframework.boot.web.server.LocalServerPort
@@ -12,13 +15,12 @@ import spock.lang.Specification
 
 import java.time.Duration
 
-import static com.raynigon.ecs.logging.LoggingConstants.SESSION_ID_HEADER
-import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_HEADER
-
-abstract class AbstractTomcatSpec extends Specification{
+abstract class AbstractTomcatSpec extends Specification {
 
     @LocalServerPort
     int port = 0
+
+    abstract void prepare()
 
     def "http call with given session id"() {
         given:

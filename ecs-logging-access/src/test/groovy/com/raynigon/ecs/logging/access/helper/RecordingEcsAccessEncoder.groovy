@@ -2,45 +2,49 @@ package com.raynigon.ecs.logging.access.helper
 
 import ch.qos.logback.access.spi.IAccessEvent
 import com.raynigon.ecs.logging.access.EcsAccessEncoder
+import lombok.Getter
 
 import java.time.Instant
-import java.time.OffsetDateTime
 
 class RecordingEcsAccessEncoder extends EcsAccessEncoder {
 
-    private static final List<EventRecord> records = new ArrayList<>()
+    private static final List<EventRecord> RECORDS = []
 
     static clearRecords() {
-        synchronized (records) {
-            records.clear()
+        synchronized (RECORDS) {
+            RECORDS.clear()
         }
     }
 
     static getRecords() {
-        return Collections.unmodifiableList(records)
+        return Collections.unmodifiableList(RECORDS)
     }
 
     @Override
     byte[] encode(IAccessEvent event) {
         byte[] result = super.encode(event)
-        synchronized (records) {
-            records.add(new EventRecord(this, event, result))
+        synchronized (RECORDS) {
+            RECORDS.add(new EventRecord(this, event, result))
         }
         return result
     }
 
     class EventRecord {
 
-        public final Instant timestamp
-        public final EcsAccessEncoder encoder
-        public final IAccessEvent event
-        public final byte[] result
+        private final Instant timestamp
+        private final EcsAccessEncoder encoder
+        private final IAccessEvent event
+        private final byte[] result
 
         EventRecord(EcsAccessEncoder encoder, IAccessEvent event, byte[] result) {
             this.timestamp = Instant.now()
             this.encoder = encoder
             this.event = event
             this.result = result
+        }
+
+        byte[] getResult(){
+            return result
         }
     }
 }

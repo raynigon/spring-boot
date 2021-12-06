@@ -8,11 +8,11 @@ class EchoController {
 
     @GetMapping
     String home() {
-        return "Hello World!";
+        return "Hello World!"
     }
 
     @PostMapping("echo")
     String echo(@RequestBody String body) {
-        return body;
+        return body
     }
 }
