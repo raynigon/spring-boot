@@ -1,12 +1,13 @@
 package com.raynigon.ecs.logging.async.executor;
 
+import org.slf4j.MDC;
+import org.springframework.lang.NonNull;
+
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
-import java.util.concurrent.atomic.AtomicReference;
-
-import org.slf4j.MDC;
 
 import static com.raynigon.ecs.logging.async.executor.MdcConcurrentExecutionHelper.afterExecution;
 import static com.raynigon.ecs.logging.async.executor.MdcConcurrentExecutionHelper.beforeExecution;
@@ -15,6 +16,7 @@ import static com.raynigon.ecs.logging.async.executor.MdcConcurrentExecutionHelp
  * A {@link ForkJoinPool} that inherits MDC contexts from the thread that queues a task.
  *
  * @author Gili Tzabari
+ * @implNote Copied https://stackoverflow.com/questions/36026402/how-to-use-mdc-with-forkjoinpool
  */
 public final class MdcForkJoinPool extends ForkJoinPool {
     /**
@@ -79,8 +81,31 @@ public final class MdcForkJoinPool extends ForkJoinPool {
         super.execute(wrap(task, MDC.getCopyOfContextMap()));
     }
 
+    @Override
+    public <T> ForkJoinTask<T> submit(ForkJoinTask<T> task) {
+        return super.submit(wrap(task, MDC.getCopyOfContextMap()));
+    }
+
+    @Override
+    @NonNull
+    public <T> ForkJoinTask<T> submit(Callable<T> task) {
+        return super.submit(wrap(task, MDC.getCopyOfContextMap()));
+    }
+
+    @Override
+    @NonNull
+    public <T> ForkJoinTask<T> submit(Runnable task, T result) {
+        return super.submit(wrap(task, MDC.getCopyOfContextMap()), result);
+    }
+
+    @Override
+    @NonNull
+    public ForkJoinTask<?> submit(Runnable task) {
+        return super.submit(wrap(task, MDC.getCopyOfContextMap()));
+    }
+
     private <T> ForkJoinTask<T> wrap(ForkJoinTask<T> task, Map<String, String> newContext) {
-        return new MdcForkJoinTask<T>(task, newContext);
+        return new MdcForkJoinTask<>(task, newContext);
     }
 
     private Runnable wrap(Runnable task, Map<String, String> newContext) {
@@ -89,6 +114,18 @@ public final class MdcForkJoinPool extends ForkJoinPool {
             Map<String, String> oldContext = beforeExecution(newContext);
             try {
                 task.run();
+            } finally {
+                afterExecution(oldContext);
+            }
+        };
+    }
+
+    private <T> Callable<T> wrap(Callable<T> task, Map<String, String> newContext) {
+        return () ->
+        {
+            Map<String, String> oldContext = beforeExecution(newContext);
+            try {
+                return task.call();
             } finally {
                 afterExecution(oldContext);
             }
