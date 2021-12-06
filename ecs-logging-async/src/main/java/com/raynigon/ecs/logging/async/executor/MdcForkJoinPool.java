@@ -14,7 +14,7 @@ import static com.raynigon.ecs.logging.async.executor.MdcConcurrentExecutionHelp
 
 /**
  * A {@link ForkJoinPool} that inherits MDC contexts from the thread that queues a task.
- * Copied https://stackoverflow.com/questions/36026402/how-to-use-mdc-with-forkjoinpool
+ * Copied from https://stackoverflow.com/questions/36026402/how-to-use-mdc-with-forkjoinpool
  *
  * @author Gili Tzabari
  */
