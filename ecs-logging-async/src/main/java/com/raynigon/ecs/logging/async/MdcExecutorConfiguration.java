@@ -1,6 +1,6 @@
 package com.raynigon.ecs.logging.async;
 
-import com.raynigon.ecs.logging.async.executor.MdcForkJoinPool;
+import com.raynigon.ecs.logging.async.executor.DefaultMdcForkJoinPool;
 import com.raynigon.ecs.logging.async.scheduler.MdcScheduledExecutorService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,10 +10,10 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 @Configuration
 public class MdcExecutorConfiguration {
 
-    private final MdcForkJoinPool globalPool = new MdcForkJoinPool();
+    private final DefaultMdcForkJoinPool globalPool = new DefaultMdcForkJoinPool();
 
     @Bean
-    public MdcForkJoinPool mdcForkJoinPool() {
+    public DefaultMdcForkJoinPool mdcForkJoinPool() {
         return globalPool;
     }
 
