@@ -10,7 +10,6 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @ConfigurationProperties("raynigon.logging.access")
 public class AccessLogProperties {
 

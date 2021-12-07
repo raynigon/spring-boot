@@ -1,5 +1,7 @@
 package com.raynigon.ecs.logging.async.scheduler
 
+import nl.altindag.log.LogCaptor
+
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
 
 import org.slf4j.MDC
@@ -38,5 +40,32 @@ class MdcScheduledRunnableSpec extends Specification {
         then:
         result.get()
         MDC.get("test") == "123"
+    }
+
+    def 'restore MDC context on exception'() {
+        given:
+        AtomicBoolean result = new AtomicBoolean(false)
+        Runnable source = { result.set(MDC.get("test") == null); throw new IllegalStateException("test") }
+        MdcScheduledRunnable target = new MdcScheduledRunnable(source)
+
+        and:
+        LogCaptor logCaptor = LogCaptor.forClass(MdcScheduledRunnable);
+
+        and:
+        MDC.clear()
+        MDC.put("test", "123")
+
+        when:
+        target.run()
+
+        then:
+        thrown(MdcScheduledRunnableException)
+
+        and:
+        result.get()
+        MDC.get("test") == "123"
+
+        and:
+        logCaptor.getErrorLogs().size() == 1
     }
 }

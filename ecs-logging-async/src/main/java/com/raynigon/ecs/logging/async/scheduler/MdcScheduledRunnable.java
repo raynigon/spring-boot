@@ -14,7 +14,7 @@ import static com.raynigon.ecs.logging.async.executor.MdcConcurrentExecutionHelp
 @RequiredArgsConstructor
 public class MdcScheduledRunnable implements Runnable {
 
-    private final Logger log = LoggerFactory.getLogger(MdcScheduledExecutorService.class);
+    private final Logger log = LoggerFactory.getLogger(MdcScheduledRunnable.class);
 
     private final Runnable runnable;
 

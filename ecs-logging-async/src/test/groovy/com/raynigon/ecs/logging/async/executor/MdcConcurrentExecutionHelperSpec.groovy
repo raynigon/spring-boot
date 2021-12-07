@@ -23,6 +23,22 @@ class MdcConcurrentExecutionHelperSpec extends Specification {
         MDC.get("test") == "new"
     }
 
+    def 'mdc context gets cleared before execution'() {
+        given:
+        MDC.clear()
+        MDC.put("test", "old")
+
+        when:
+        def previous = MdcConcurrentExecutionHelper.beforeExecution(null)
+
+        then:
+        previous.containsKey("test")
+        previous["test"] == "old"
+
+        and:
+        MDC.get("test") == null
+    }
+
     def 'mdc context gets restored'() {
         given:
         MDC.clear()
@@ -34,5 +50,17 @@ class MdcConcurrentExecutionHelperSpec extends Specification {
 
         then:
         MDC.get("test") == "old"
+    }
+
+    def 'mdc context gets cleared after execution'() {
+        given:
+        MDC.clear()
+        MDC.put("test", "new")
+
+        when:
+        MdcConcurrentExecutionHelper.afterExecution(null)
+
+        then:
+        MDC.get("test") == null
     }
 }

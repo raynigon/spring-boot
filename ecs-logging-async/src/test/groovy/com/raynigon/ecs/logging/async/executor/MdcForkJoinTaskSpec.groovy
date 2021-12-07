@@ -50,4 +50,32 @@ class MdcForkJoinTaskSpec extends Specification {
         MDC.get("test") == "old"
         reference.get() == "new"
     }
+
+    def 'raw result handling returns expected result'() {
+        given:
+        DummyForkJoinTask dummyTask = new DummyForkJoinTask()
+        PublicMdcForkJoinTask task = new PublicMdcForkJoinTask(dummyTask, [:])
+        dummyTask.runnable = { dummyTask.setRawResult("123") }
+
+        when:
+        task.exec()
+
+        then:
+        dummyTask.getRawResult() == "123"
+        task.getRawResult() == "123"
+    }
+
+    def 'raw result handling with override'() {
+        given:
+        DummyForkJoinTask dummyTask = new DummyForkJoinTask()
+        PublicMdcForkJoinTask task = new PublicMdcForkJoinTask(dummyTask, [:])
+        dummyTask.runnable = { task.setRawResult("123") }
+
+        when:
+        task.exec()
+
+        then:
+        dummyTask.getRawResult() == null
+        task.getRawResult() == "123"
+    }
 }
