@@ -1,14 +1,14 @@
 package com.raynigon.ecs.logging.access.client
 
-import org.slf4j.MDC
-import org.springframework.http.HttpHeaders
-import spock.lang.Specification
-import spock.lang.Subject
-
 import static com.raynigon.ecs.logging.LoggingConstants.SESSION_ID_HEADER
 import static com.raynigon.ecs.logging.LoggingConstants.SESSION_ID_PROPERTY
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_HEADER
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
+
+import org.slf4j.MDC
+import org.springframework.http.HttpHeaders
+import spock.lang.Specification
+import spock.lang.Subject
 
 class AccessLogHeaderFilterSpec extends Specification {
 

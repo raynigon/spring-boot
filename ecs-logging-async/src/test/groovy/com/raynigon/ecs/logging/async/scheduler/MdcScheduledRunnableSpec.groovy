@@ -1,11 +1,11 @@
 package com.raynigon.ecs.logging.async.scheduler
 
+import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
+
 import org.slf4j.MDC
 import spock.lang.Specification
 
 import java.util.concurrent.atomic.AtomicBoolean
-
-import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
 
 class MdcScheduledRunnableSpec extends Specification {
 

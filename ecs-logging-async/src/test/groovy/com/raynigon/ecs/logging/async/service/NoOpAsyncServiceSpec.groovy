@@ -1,11 +1,9 @@
 package com.raynigon.ecs.logging.async.service
 
-import com.raynigon.ecs.logging.async.executor.MdcForkJoinPool
 import spock.lang.Specification
 import spock.lang.Subject
 
 import java.util.concurrent.Callable
-import java.util.concurrent.ForkJoinTask
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Supplier
 

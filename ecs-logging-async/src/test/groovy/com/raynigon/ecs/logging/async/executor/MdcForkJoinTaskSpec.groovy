@@ -35,7 +35,7 @@ class MdcForkJoinTaskSpec extends Specification {
         AtomicReference reference = new AtomicReference()
         dummyTask.runnable = {
             reference.set(MDC.get("test"))
-            throw new RuntimeException("test exception")
+            throw new IllegalStateException("test exception")
         }
         Map newContext = ["test": "new"]
         PublicMdcForkJoinTask task = new PublicMdcForkJoinTask(dummyTask, newContext)
@@ -44,7 +44,7 @@ class MdcForkJoinTaskSpec extends Specification {
         task.exec()
 
         then:
-        thrown(RuntimeException)
+        thrown(IllegalStateException)
 
         and:
         MDC.get("test") == "old"

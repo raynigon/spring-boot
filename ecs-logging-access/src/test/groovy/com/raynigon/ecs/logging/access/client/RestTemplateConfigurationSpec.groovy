@@ -21,6 +21,6 @@ class RestTemplateConfigurationSpec extends Specification {
         configuration.configure()
 
         then:
-        !interceptors0.isEmpty()
+        !interceptors0.empty
     }
 }
