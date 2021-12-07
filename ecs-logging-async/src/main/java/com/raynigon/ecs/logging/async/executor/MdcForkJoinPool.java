@@ -1,6 +1,5 @@
 package com.raynigon.ecs.logging.async.executor;
 
-import org.slf4j.MDC;
 import org.springframework.lang.NonNull;
 
 import java.util.concurrent.Callable;

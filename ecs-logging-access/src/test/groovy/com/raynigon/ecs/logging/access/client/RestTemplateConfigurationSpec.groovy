@@ -1,11 +1,10 @@
 package com.raynigon.ecs.logging.access.client
 
-import org.springframework.http.HttpHeaders
-
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_HEADER
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
 
 import org.slf4j.MDC
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpRequest
 import org.springframework.http.client.ClientHttpRequestExecution
 import org.springframework.http.client.ClientHttpRequestInterceptor

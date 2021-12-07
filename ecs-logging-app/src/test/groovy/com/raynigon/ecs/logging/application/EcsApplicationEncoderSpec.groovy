@@ -1,5 +1,7 @@
 package com.raynigon.ecs.logging.application
 
+import static com.raynigon.ecs.logging.LoggingConstants.SERVICE_NAME_PROPERTY
+
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.LoggerContext
@@ -7,8 +9,6 @@ import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.classic.spi.LoggingEvent
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
-
-import static com.raynigon.ecs.logging.LoggingConstants.SERVICE_NAME_PROPERTY
 
 class EcsApplicationEncoderSpec extends Specification {
 

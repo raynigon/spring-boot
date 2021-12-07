@@ -1,9 +1,8 @@
 package com.raynigon.ecs.logging.async.scheduler
 
-import nl.altindag.log.LogCaptor
-
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
 
+import nl.altindag.log.LogCaptor
 import org.slf4j.MDC
 import spock.lang.Specification
 
@@ -49,7 +48,7 @@ class MdcScheduledRunnableSpec extends Specification {
         MdcScheduledRunnable target = new MdcScheduledRunnable(source)
 
         and:
-        LogCaptor logCaptor = LogCaptor.forClass(MdcScheduledRunnable);
+        LogCaptor logCaptor = LogCaptor.forClass(MdcScheduledRunnable)
 
         and:
         MDC.clear()
