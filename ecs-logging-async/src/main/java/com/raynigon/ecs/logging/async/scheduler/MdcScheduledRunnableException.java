@@ -11,4 +11,8 @@ public class MdcScheduledRunnableException extends RuntimeException {
         super(t);
         this.mdcTags = mdcTags;
     }
+
+    public Map<String, String> getMdcTags() {
+        return mdcTags;
+    }
 }
