@@ -11,6 +11,7 @@ class MdcForkJoinTaskSpec extends Specification {
 
     def 'mdc context is restored after execution'() {
         given:
+        MDC.clear()
         MDC.put("test", "old")
         DummyForkJoinTask dummyTask = new DummyForkJoinTask()
         AtomicReference reference = new AtomicReference()
@@ -28,6 +29,7 @@ class MdcForkJoinTaskSpec extends Specification {
 
     def 'mdc context is restored on exception'() {
         given:
+        MDC.clear()
         MDC.put("test", "old")
         DummyForkJoinTask dummyTask = new DummyForkJoinTask()
         AtomicReference reference = new AtomicReference()
