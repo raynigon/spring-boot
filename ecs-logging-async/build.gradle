@@ -5,7 +5,7 @@ dependencies {
 
     compileOnly("ch.qos.logback:logback-core")
     testImplementation("ch.qos.logback:logback-core")
-    testImplementation("io.github.hakky54:logcaptor:2.7.2")
+    testImplementation("io.github.hakky54:logcaptor:2.7.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-web")
 }
