@@ -16,12 +16,10 @@ import java.util.concurrent.ScheduledExecutorService;
 @EnableConfigurationProperties(AsyncLoggingConfiguration.class)
 public class MdcExecutorConfiguration {
 
-    private final AsyncLoggingConfiguration config;
     private final DefaultMdcForkJoinPool globalPool;
     private final ConcurrentTaskScheduler taskScheduler;
 
     public MdcExecutorConfiguration(AsyncLoggingConfiguration config) {
-        this.config = config;
         this.globalPool = new DefaultMdcForkJoinPool(config.getPoolExecutors());
         ScheduledExecutorService taskThreadPool = Executors.newSingleThreadScheduledExecutor();
         if (config.getTaskExecutors() > 1) {
