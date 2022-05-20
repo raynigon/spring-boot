@@ -43,7 +43,7 @@ public class EcsAccessConverter implements EventConverter<IAccessEvent, EcsAcces
             return;
         }
         if (properties.isExportBody()) {
-            processors.add(new BodyProcessor());
+            processors.add(new BodyProcessor(properties.getBodySizeLimit()));
         }
     }
 
