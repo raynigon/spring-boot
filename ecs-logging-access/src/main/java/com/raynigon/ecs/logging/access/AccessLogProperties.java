@@ -15,4 +15,6 @@ public class AccessLogProperties {
     private List<String> excludeEndpoints = new ArrayList<>();
 
     private boolean exportBody = false;
+
+    private int bodySizeLimit = 10_000;
 }
