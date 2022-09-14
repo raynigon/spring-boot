@@ -1,5 +1,6 @@
 package com.raynigon.ecs.logging.async.scheduler
 
+import com.raynigon.ecs.logging.async.model.MdcRunnable
 import org.springframework.scheduling.TaskScheduler
 import org.springframework.scheduling.Trigger
 import spock.lang.Specification
@@ -23,7 +24,7 @@ class MdcScheduledExecutorServiceSpec extends Specification {
         executorService.schedule(task, trigger)
 
         then:
-        1 * delegate.schedule(_ as MdcScheduledRunnable, _ as Trigger)
+        1 * delegate.schedule(_ as MdcRunnable, _ as Trigger)
     }
 
     def 'schedule with date gets delegated'() {
@@ -35,7 +36,7 @@ class MdcScheduledExecutorServiceSpec extends Specification {
         executorService.schedule(task, date)
 
         then:
-        1 * delegate.schedule(_ as MdcScheduledRunnable, _ as Date)
+        1 * delegate.schedule(_ as MdcRunnable, _ as Date)
     }
 
     def 'scheduleAtFixedRate with date gets delegated and period'() {
@@ -47,7 +48,7 @@ class MdcScheduledExecutorServiceSpec extends Specification {
         executorService.scheduleAtFixedRate(task, date, 0L)
 
         then:
-        1 * delegate.scheduleAtFixedRate(_ as MdcScheduledRunnable, _ as Date, 0L)
+        1 * delegate.scheduleAtFixedRate(_ as MdcRunnable, _ as Date, 0L)
     }
 
     def 'scheduleAtFixedRate with period'() {
@@ -58,7 +59,7 @@ class MdcScheduledExecutorServiceSpec extends Specification {
         executorService.scheduleAtFixedRate(task, 0L)
 
         then:
-        1 * delegate.scheduleAtFixedRate(_ as MdcScheduledRunnable, 0L)
+        1 * delegate.scheduleAtFixedRate(_ as MdcRunnable, 0L)
     }
 
     def 'scheduleWithFixedDelay with date and delay'() {
@@ -70,7 +71,7 @@ class MdcScheduledExecutorServiceSpec extends Specification {
         executorService.scheduleWithFixedDelay(task, date, 0L)
 
         then:
-        1 * delegate.scheduleWithFixedDelay(_ as MdcScheduledRunnable, _ as Date, 0L)
+        1 * delegate.scheduleWithFixedDelay(_ as MdcRunnable, _ as Date, 0L)
     }
 
     def 'scheduleWithFixedDelay with delay'() {
@@ -81,6 +82,6 @@ class MdcScheduledExecutorServiceSpec extends Specification {
         executorService.scheduleWithFixedDelay(task, 0L)
 
         then:
-        1 * delegate.scheduleWithFixedDelay(_ as MdcScheduledRunnable, 0L)
+        1 * delegate.scheduleWithFixedDelay(_ as MdcRunnable, 0L)
     }
 }

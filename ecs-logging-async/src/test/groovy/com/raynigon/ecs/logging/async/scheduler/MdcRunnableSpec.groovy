@@ -1,5 +1,7 @@
 package com.raynigon.ecs.logging.async.scheduler
 
+import com.raynigon.ecs.logging.async.model.MdcRunnable
+
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
 
 import nl.altindag.log.LogCaptor
@@ -8,13 +10,13 @@ import spock.lang.Specification
 
 import java.util.concurrent.atomic.AtomicBoolean
 
-class MdcScheduledRunnableSpec extends Specification {
+class MdcRunnableSpec extends Specification {
 
     def 'transaction id is set'() {
         given:
         AtomicBoolean result = new AtomicBoolean(false)
         Runnable source = { result.set(MDC.get(TRANSACTION_ID_PROPERTY) != null) }
-        MdcScheduledRunnable target = new MdcScheduledRunnable(source)
+        MdcRunnable target = new MdcRunnable(source)
 
         when:
         target.run()
@@ -27,7 +29,7 @@ class MdcScheduledRunnableSpec extends Specification {
         given:
         AtomicBoolean result = new AtomicBoolean(false)
         Runnable source = { result.set(MDC.get("test") == null) }
-        MdcScheduledRunnable target = new MdcScheduledRunnable(source)
+        MdcRunnable target = new MdcRunnable(source)
 
         and:
         MDC.clear()
@@ -45,10 +47,10 @@ class MdcScheduledRunnableSpec extends Specification {
         given:
         AtomicBoolean result = new AtomicBoolean(false)
         Runnable source = { result.set(MDC.get("test") == null); throw new IllegalStateException("test") }
-        MdcScheduledRunnable target = new MdcScheduledRunnable(source)
+        MdcRunnable target = new MdcRunnable(source)
 
         and:
-        LogCaptor logCaptor = LogCaptor.forClass(MdcScheduledRunnable)
+        LogCaptor logCaptor = LogCaptor.forClass(MdcRunnable)
 
         and:
         MDC.clear()

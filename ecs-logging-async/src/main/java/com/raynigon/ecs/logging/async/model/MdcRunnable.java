@@ -1,5 +1,6 @@
-package com.raynigon.ecs.logging.async.scheduler;
+package com.raynigon.ecs.logging.async.model;
 
+import com.raynigon.ecs.logging.async.scheduler.MdcScheduledRunnableException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +13,9 @@ import static com.raynigon.ecs.logging.async.executor.MdcConcurrentExecutionHelp
 import static com.raynigon.ecs.logging.async.executor.MdcConcurrentExecutionHelper.beforeExecution;
 
 @RequiredArgsConstructor
-public class MdcScheduledRunnable implements Runnable {
+public class MdcRunnable implements Runnable {
 
-    private final Logger log = LoggerFactory.getLogger(MdcScheduledRunnable.class);
+    private final Logger log = LoggerFactory.getLogger(MdcRunnable.class);
 
     private final Runnable runnable;
 
