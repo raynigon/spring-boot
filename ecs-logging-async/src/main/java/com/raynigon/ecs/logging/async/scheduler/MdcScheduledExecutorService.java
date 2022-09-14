@@ -1,5 +1,6 @@
 package com.raynigon.ecs.logging.async.scheduler;
 
+import com.raynigon.ecs.logging.async.model.MdcRunnable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.scheduling.TaskScheduler;
@@ -49,6 +50,6 @@ public class MdcScheduledExecutorService implements TaskScheduler {
     }
 
     private Runnable wrap(Runnable runnable) {
-        return new MdcScheduledRunnable(runnable);
+        return new MdcRunnable(runnable);
     }
 }

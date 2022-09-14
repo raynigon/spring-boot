@@ -2,12 +2,14 @@ package com.raynigon.ecs.logging.async;
 
 import com.raynigon.ecs.logging.async.config.AsyncLoggingConfiguration;
 import com.raynigon.ecs.logging.async.executor.DefaultMdcForkJoinPool;
+import com.raynigon.ecs.logging.async.model.MdcRunnable;
 import com.raynigon.ecs.logging.async.scheduler.MdcScheduledExecutorService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -36,5 +38,17 @@ public class MdcExecutorConfiguration {
     @Bean
     public TaskScheduler mdcTaskScheduler() {
         return new MdcScheduledExecutorService(taskScheduler);
+    }
+
+    @Bean
+    public ThreadPoolTaskExecutor threadPoolTaskExecutor(){
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(4);
+        executor.setQueueCapacity(1000);
+        executor.setThreadNamePrefix("Async-");
+        executor.setTaskDecorator(MdcRunnable::new);
+        executor.initialize();
+        return executor;
     }
 }
