@@ -1,5 +1,11 @@
 package com.raynigon.ecs.logging.async
 
+import com.raynigon.ecs.logging.async.helper.MeterRegistryProvider
+import io.micrometer.core.instrument.MeterRegistry
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.Bean
+
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
 
 import com.raynigon.ecs.logging.async.service.AsyncService
@@ -15,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 
 @EnableAutoConfiguration
-@ContextConfiguration(classes = MdcExecutorConfiguration)
+@ContextConfiguration(classes = [MdcExecutorConfiguration, MeterRegistryProvider])
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = [])
 class MdcExecutorConfigurationITSpec extends Specification {
 
@@ -24,6 +30,8 @@ class MdcExecutorConfigurationITSpec extends Specification {
 
     @Autowired
     ThreadPoolTaskExecutor taskExecutor
+
+    MeterRegistry meterRegistry = new SimpleMeterRegistry()
 
     def 'setup application'() {
         expect:
