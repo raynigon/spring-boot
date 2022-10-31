@@ -31,8 +31,6 @@ class MdcExecutorConfigurationITSpec extends Specification {
     @Autowired
     ThreadPoolTaskExecutor taskExecutor
 
-    MeterRegistry meterRegistry = new SimpleMeterRegistry()
-
     def 'setup application'() {
         expect:
         true
