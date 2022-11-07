@@ -7,7 +7,7 @@ jobs:
     name: "Build Release"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: "Setup Java JDK"
@@ -91,7 +91,7 @@ jobs:
             {{/pull_requests.dependencies}}
             {{/pull_requests.dependencies.length}}
       - name: "Github Release"
-        uses: softprops/action-gh-release@91409e712cf565ce9eff10c87a8d1b11b81757ae #v1
+        uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5 #v1
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
