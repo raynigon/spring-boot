@@ -14,7 +14,7 @@ class DefaultAsyncServiceSpec extends Specification {
 
     MdcForkJoinPool pool = Mock()
 
-    SimpleMeterRegistry meterRegistry = new SimpleMeterRegistry();
+    SimpleMeterRegistry meterRegistry = new SimpleMeterRegistry()
 
     @Subject
     AsyncService service = new DefaultAsyncService(pool, meterRegistry)
