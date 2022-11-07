@@ -1,7 +1,6 @@
 package com.raynigon.ecs.logging.async
 
-import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
-
+import com.raynigon.ecs.logging.async.helper.MeterRegistryProvider
 import com.raynigon.ecs.logging.async.service.AsyncService
 import org.slf4j.MDC
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,8 +13,10 @@ import spock.lang.Specification
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 
+import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
+
 @EnableAutoConfiguration
-@ContextConfiguration(classes = MdcExecutorConfiguration)
+@ContextConfiguration(classes = [MdcExecutorConfiguration, MeterRegistryProvider])
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = [])
 class MdcExecutorConfigurationITSpec extends Specification {
 

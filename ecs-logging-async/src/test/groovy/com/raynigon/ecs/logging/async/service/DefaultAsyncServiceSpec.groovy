@@ -2,6 +2,7 @@ package com.raynigon.ecs.logging.async.service
 
 import com.raynigon.ecs.logging.async.executor.MdcForkJoinPool
 import com.raynigon.ecs.logging.async.helper.DummyForkJoinTask
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -13,8 +14,10 @@ class DefaultAsyncServiceSpec extends Specification {
 
     MdcForkJoinPool pool = Mock()
 
+    SimpleMeterRegistry meterRegistry = new SimpleMeterRegistry()
+
     @Subject
-    AsyncService service = new DefaultAsyncService(pool)
+    AsyncService service = new DefaultAsyncService(pool, meterRegistry)
 
     def 'supplyAsync gets executed'() {
         given:
@@ -30,6 +33,10 @@ class DefaultAsyncServiceSpec extends Specification {
 
         and:
         1 * pool.execute(_ as Runnable) >> { Runnable r -> r.run() }
+
+        and:
+        meterRegistry.find(DefaultAsyncService.QUEUE_TIMER_NAME).timer().count() == 1
+        meterRegistry.find(DefaultAsyncService.EXECUTION_TIMER_NAME).timer().count() == 1
     }
 
     def 'submit gets executed'() {
@@ -53,5 +60,9 @@ class DefaultAsyncServiceSpec extends Specification {
             task.invoke()
             return task
         }
+
+        and:
+        meterRegistry.find(DefaultAsyncService.QUEUE_TIMER_NAME).timer().count() == 1
+        meterRegistry.find(DefaultAsyncService.EXECUTION_TIMER_NAME).timer().count() == 1
     }
 }

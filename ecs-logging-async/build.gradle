@@ -1,9 +1,11 @@
 dependencies {
     implementation(project(':ecs-logging-base'))
     compileOnly("org.springframework.boot:spring-boot-starter-web")
+    compileOnly("io.micrometer:micrometer-core")
     testImplementation("org.springframework.boot:spring-boot-starter-web")
 
     compileOnly("ch.qos.logback:logback-core")
+    testImplementation("io.micrometer:micrometer-core")
     testImplementation("ch.qos.logback:logback-core")
     testImplementation("io.github.hakky54:logcaptor:2.7.10")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
