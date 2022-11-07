@@ -1,13 +1,6 @@
 package com.raynigon.ecs.logging.async
 
 import com.raynigon.ecs.logging.async.helper.MeterRegistryProvider
-import io.micrometer.core.instrument.MeterRegistry
-import io.micrometer.core.instrument.simple.SimpleMeterRegistry
-import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.context.annotation.Bean
-
-import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
-
 import com.raynigon.ecs.logging.async.service.AsyncService
 import org.slf4j.MDC
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,6 +12,8 @@ import spock.lang.Specification
 
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
+
+import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
 
 @EnableAutoConfiguration
 @ContextConfiguration(classes = [MdcExecutorConfiguration, MeterRegistryProvider])

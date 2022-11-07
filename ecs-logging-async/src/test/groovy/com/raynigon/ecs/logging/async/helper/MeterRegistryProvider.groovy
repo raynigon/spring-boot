@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class MeterRegistryProvider {
 
-    private MeterRegistry meterRegistry = new SimpleMeterRegistry()
+    private final MeterRegistry meterRegistry = new SimpleMeterRegistry()
 
     @Bean
-    MeterRegistry meterRegistry() {
+    MeterRegistry getMeterRegistry() {
         return meterRegistry
     }
 }
