@@ -11,9 +11,22 @@ jobs:
         with:
           java-version: 11
       - name: Unit Tests
-        uses: eskatos/gradle-command-action@v1.3.2
+        uses: eskatos/gradle-command-action@v2.3.3
         with:
           arguments: test
+      - name: "Upload Test Logs Artifact"
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: unit-test-logs
+          path: |
+            build/reports/tests/
+            ecs-logging-access/build/reports/tests/
+            ecs-logging-app/build/reports/tests/
+            ecs-logging-async/build/reports/tests/
+            ecs-logging-audit/build/reports/tests/
+            ecs-logging-base/build/reports/tests/
+            gzip-request-filter-starter/build/reports/tests/
       - name: Codacy Publish
         uses: codacy/codacy-coverage-reporter-action@master
         if: github.actor != 'dependabot[bot]'
@@ -28,6 +41,6 @@ jobs:
         with:
           java-version: 11
       - name: Generate javadoc
-        uses: eskatos/gradle-command-action@v1.3.2
+        uses: eskatos/gradle-command-action@v2.3.3
         with:
           arguments: globalJavadoc
