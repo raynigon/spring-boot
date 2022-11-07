@@ -28,7 +28,7 @@ public class DefaultAsyncService implements AsyncService {
 
     @Override
     public <U> CompletableFuture<U> supplyAsync(Supplier<U> supplier) {
-        String sourceName = supplier.getClass().getName();
+        String sourceName = formatSource(supplier.getClass());
         Timer queueTimer = meterRegistry.timer(QUEUE_TIMER_NAME, "source", sourceName);
         Timer execTimer = meterRegistry.timer(EXECUTION_TIMER_NAME, "source", sourceName);
         Timer.Sample sample = Timer.start();
@@ -43,7 +43,7 @@ public class DefaultAsyncService implements AsyncService {
 
     @Override
     public <V> ForkJoinTask<V> submit(Callable<V> callable) {
-        String sourceName = callable.getClass().getName();
+        String sourceName = formatSource(callable.getClass());
         Timer queueTimer = meterRegistry.timer(QUEUE_TIMER_NAME, "source", sourceName);
         Timer execTimer = meterRegistry.timer(EXECUTION_TIMER_NAME, "source", sourceName);
         Timer.Sample sample = Timer.start();
@@ -53,5 +53,9 @@ public class DefaultAsyncService implements AsyncService {
             return execTimer.recordCallable(callable);
         };
         return forkJoinPool.submit(wrapped);
+    }
+
+    private String formatSource(Class<?> source){
+        return source.getName().split("/")[0];
     }
 }
