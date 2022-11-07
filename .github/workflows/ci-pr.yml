@@ -10,6 +10,7 @@ jobs:
       - uses: actions/setup-java@v3.6.0
         with:
           java-version: 11
+          distribution: adopt
       - name: Unit Tests
         uses: eskatos/gradle-command-action@v2.3.3
         with:
@@ -40,6 +41,7 @@ jobs:
       - uses: actions/setup-java@v3.6.0
         with:
           java-version: 11
+          distribution: adopt
       - name: Generate javadoc
         uses: eskatos/gradle-command-action@v2.3.3
         with:
