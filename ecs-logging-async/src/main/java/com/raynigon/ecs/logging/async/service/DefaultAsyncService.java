@@ -17,7 +17,8 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 public class DefaultAsyncService implements AsyncService {
 
-    private static final String TIMER_NAME = "raynigon.async.service.duration";
+    private static final String QUEUE_TIMER_NAME = "raynigon.async.service.queue.duration";
+    private static final String EXECUTION_TIMER_NAME = "raynigon.async.service.execution.duration";
 
     private final MdcForkJoinPool forkJoinPool;
 
@@ -28,17 +29,13 @@ public class DefaultAsyncService implements AsyncService {
     @Override
     public <U> CompletableFuture<U> supplyAsync(Supplier<U> supplier) {
         String sourceName = supplier.getClass().getName();
-        Timer timer = meterRegistry.timer(TIMER_NAME, "source", sourceName);
+        Timer queueTimer = meterRegistry.timer(QUEUE_TIMER_NAME, "source", sourceName);
+        Timer execTimer = meterRegistry.timer(EXECUTION_TIMER_NAME, "source", sourceName);
         Timer.Sample sample = Timer.start();
         Supplier<U> wrapped = () -> {
-            U result;
-            try {
-                result = supplier.get();
-            } finally {
-                long nanoseconds = sample.stop(timer);
-                log.trace("The supplier {} took {} ms", sourceName, nanoseconds / 1000000.0);
-            }
-            return result;
+            long nanoseconds = sample.stop(queueTimer);
+            log.trace("The supplier {} took {} ms in Queue", sourceName, nanoseconds / 1000000.0);
+            return execTimer.record(supplier);
         };
         log.trace("Add supplier {} to ForkJoinPool", supplier);
         return CompletableFuture.supplyAsync(wrapped, forkJoinPool);
@@ -47,17 +44,13 @@ public class DefaultAsyncService implements AsyncService {
     @Override
     public <V> ForkJoinTask<V> submit(Callable<V> callable) {
         String sourceName = callable.getClass().getName();
-        Timer timer = meterRegistry.timer(TIMER_NAME, "source", sourceName);
+        Timer queueTimer = meterRegistry.timer(QUEUE_TIMER_NAME, "source", sourceName);
+        Timer execTimer = meterRegistry.timer(EXECUTION_TIMER_NAME, "source", sourceName);
         Timer.Sample sample = Timer.start();
         Callable<V> wrapped = () -> {
-            V result;
-            try {
-                result = callable.call();
-            } finally {
-                long nanoseconds = sample.stop(timer);
-                log.trace("The callable {} took {} ms", sourceName, nanoseconds / 1000000.0);
-            }
-            return result;
+            long nanoseconds = sample.stop(queueTimer);
+            log.trace("The callable {} took {} ms in Queue", sourceName, nanoseconds / 1000000.0);
+            return execTimer.recordCallable(callable);
         };
         return forkJoinPool.submit(wrapped);
     }

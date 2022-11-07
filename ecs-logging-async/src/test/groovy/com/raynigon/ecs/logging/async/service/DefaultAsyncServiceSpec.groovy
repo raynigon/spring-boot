@@ -35,7 +35,8 @@ class DefaultAsyncServiceSpec extends Specification {
         1 * pool.execute(_ as Runnable) >> { Runnable r -> r.run() }
 
         and:
-        meterRegistry.find(DefaultAsyncService.TIMER_NAME).timer().count() == 1
+        meterRegistry.find(DefaultAsyncService.QUEUE_TIMER_NAME).timer().count() == 1
+        meterRegistry.find(DefaultAsyncService.EXECUTION_TIMER_NAME).timer().count() == 1
     }
 
     def 'submit gets executed'() {
@@ -61,6 +62,7 @@ class DefaultAsyncServiceSpec extends Specification {
         }
 
         and:
-        meterRegistry.find(DefaultAsyncService.TIMER_NAME).timer().count() == 1
+        meterRegistry.find(DefaultAsyncService.QUEUE_TIMER_NAME).timer().count() == 1
+        meterRegistry.find(DefaultAsyncService.EXECUTION_TIMER_NAME).timer().count() == 1
     }
 }
