@@ -5,14 +5,8 @@ import com.raynigon.ecs.logging.async.service.helper.TimerWrapper;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Service;
 
-@Service
 @RequiredArgsConstructor
-@ConditionalOnClass(MeterRegistry.class)
-@ConditionalOnProperty(name = "raynigon.logging.async.metrics.enabled", havingValue = "true")
 public class MicrometerMetricsService implements AsyncMetricsService {
 
 

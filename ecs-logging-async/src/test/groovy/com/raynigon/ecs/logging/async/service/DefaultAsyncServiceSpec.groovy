@@ -16,8 +16,10 @@ class DefaultAsyncServiceSpec extends Specification {
 
     SimpleMeterRegistry meterRegistry = new SimpleMeterRegistry()
 
+    AsyncMetricsService metricsService = new MicrometerMetricsService(meterRegistry)
+
     @Subject
-    AsyncService service = new DefaultAsyncService(pool, meterRegistry)
+    AsyncService service = new DefaultAsyncService(pool, metricsService)
 
     def 'supplyAsync gets executed'() {
         given:
@@ -35,8 +37,8 @@ class DefaultAsyncServiceSpec extends Specification {
         1 * pool.execute(_ as Runnable) >> { Runnable r -> r.run() }
 
         and:
-        meterRegistry.find(DefaultAsyncService.QUEUE_TIMER_NAME).timer().count() == 1
-        meterRegistry.find(DefaultAsyncService.EXECUTION_TIMER_NAME).timer().count() == 1
+        meterRegistry.find(MicrometerMetricsService.QUEUE_TIMER_NAME).timer().count() == 1
+        meterRegistry.find(MicrometerMetricsService.EXECUTION_TIMER_NAME).timer().count() == 1
     }
 
     def 'submit gets executed'() {
@@ -62,7 +64,7 @@ class DefaultAsyncServiceSpec extends Specification {
         }
 
         and:
-        meterRegistry.find(DefaultAsyncService.QUEUE_TIMER_NAME).timer().count() == 1
-        meterRegistry.find(DefaultAsyncService.EXECUTION_TIMER_NAME).timer().count() == 1
+        meterRegistry.find(MicrometerMetricsService.QUEUE_TIMER_NAME).timer().count() == 1
+        meterRegistry.find(MicrometerMetricsService.EXECUTION_TIMER_NAME).timer().count() == 1
     }
 }
