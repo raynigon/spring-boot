@@ -9,4 +9,27 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-
+  - package-ecosystem: "gradle"
+    directory: "/ecs-logging-access/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/ecs-logging-app/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/ecs-logging-async/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/ecs-logging-audit/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/ecs-logging-base/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/gzip-request-filter-starter/"
+    schedule:
+      interval: "daily"
