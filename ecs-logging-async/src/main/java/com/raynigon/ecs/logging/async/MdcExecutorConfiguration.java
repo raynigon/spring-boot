@@ -4,6 +4,13 @@ import com.raynigon.ecs.logging.async.config.AsyncLoggingConfiguration;
 import com.raynigon.ecs.logging.async.executor.DefaultMdcForkJoinPool;
 import com.raynigon.ecs.logging.async.model.MdcRunnable;
 import com.raynigon.ecs.logging.async.scheduler.MdcScheduledExecutorService;
+import com.raynigon.ecs.logging.async.service.AsyncMetricsService;
+import com.raynigon.ecs.logging.async.service.MicrometerMetricsService;
+import com.raynigon.ecs.logging.async.service.NoOpMetricsService;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,5 +57,18 @@ public class MdcExecutorConfiguration {
         executor.setTaskDecorator(MdcRunnable::new);
         executor.initialize();
         return executor;
+    }
+
+    @Bean
+    @ConditionalOnClass(MeterRegistry.class)
+    @ConditionalOnProperty(name = "raynigon.logging.async.metrics.enabled", havingValue = "true")
+    public AsyncMetricsService micrometerAsyncMetricsService(MeterRegistry meterRegistry){
+        return new MicrometerMetricsService(meterRegistry);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(AsyncMetricsService.class)
+    public AsyncMetricsService fallbackAsyncMetricsService(){
+        return new NoOpMetricsService();
     }
 }
