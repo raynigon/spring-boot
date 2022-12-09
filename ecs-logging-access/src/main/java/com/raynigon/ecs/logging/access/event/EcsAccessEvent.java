@@ -2,11 +2,12 @@ package com.raynigon.ecs.logging.access.event;
 
 import ch.qos.logback.access.spi.AccessEvent;
 import ch.qos.logback.access.spi.ServerAdapter;
+import ch.qos.logback.core.Context;
 import com.raynigon.ecs.logging.access.context.IAccessLogContext;
 import lombok.Getter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.time.Duration;
 
 @Getter
@@ -22,7 +23,7 @@ public class EcsAccessEvent extends AccessEvent {
             IAccessLogContext context,
             Duration duration
     ) {
-        super(httpRequest, httpResponse, adapter);
+        super(context, httpRequest, httpResponse, adapter);
         this.context = context;
         this.duration = duration;
     }

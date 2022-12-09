@@ -11,8 +11,8 @@ import com.raynigon.ecs.logging.access.context.IAccessLogContext
 import com.raynigon.ecs.logging.access.event.EcsAccessEvent
 import spock.lang.Specification
 
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 
 class EcsAccessEncoderSpec extends Specification {
 

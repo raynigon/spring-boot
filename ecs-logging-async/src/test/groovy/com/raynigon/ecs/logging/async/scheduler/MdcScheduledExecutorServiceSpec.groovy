@@ -6,6 +6,7 @@ import org.springframework.scheduling.Trigger
 import spock.lang.Specification
 import spock.lang.Subject
 
+import java.time.Duration
 import java.time.Instant
 
 class MdcScheduledExecutorServiceSpec extends Specification {
@@ -30,25 +31,25 @@ class MdcScheduledExecutorServiceSpec extends Specification {
     def 'schedule with date gets delegated'() {
         given:
         Runnable task = {}
-        Date date = Date.from(Instant.now())
+        Instant instant = Instant.now()
 
         when:
-        executorService.schedule(task, date)
+        executorService.schedule(task, instant)
 
         then:
-        1 * delegate.schedule(_ as MdcRunnable, _ as Date)
+        1 * delegate.schedule(_ as MdcRunnable, _ as Instant)
     }
 
     def 'scheduleAtFixedRate with date gets delegated and period'() {
         given:
         Runnable task = {}
-        Date date = Date.from(Instant.now())
+        Instant instant = Instant.now()
 
         when:
-        executorService.scheduleAtFixedRate(task, date, 0L)
+        executorService.scheduleAtFixedRate(task, instant, Duration.ZERO)
 
         then:
-        1 * delegate.scheduleAtFixedRate(_ as MdcRunnable, _ as Date, 0L)
+        1 * delegate.scheduleAtFixedRate(_ as MdcRunnable, _ as Instant, Duration.ZERO)
     }
 
     def 'scheduleAtFixedRate with period'() {
@@ -56,22 +57,22 @@ class MdcScheduledExecutorServiceSpec extends Specification {
         Runnable task = {}
 
         when:
-        executorService.scheduleAtFixedRate(task, 0L)
+        executorService.scheduleAtFixedRate(task, Duration.ZERO)
 
         then:
-        1 * delegate.scheduleAtFixedRate(_ as MdcRunnable, 0L)
+        1 * delegate.scheduleAtFixedRate(_ as MdcRunnable, Duration.ZERO)
     }
 
     def 'scheduleWithFixedDelay with date and delay'() {
         given:
         Runnable task = {}
-        Date date = Date.from(Instant.now())
+        Instant instant = Instant.now()
 
         when:
-        executorService.scheduleWithFixedDelay(task, date, 0L)
+        executorService.scheduleWithFixedDelay(task, instant, Duration.ZERO)
 
         then:
-        1 * delegate.scheduleWithFixedDelay(_ as MdcRunnable, _ as Date, 0L)
+        1 * delegate.scheduleWithFixedDelay(_ as MdcRunnable, _ as Instant, Duration.ZERO)
     }
 
     def 'scheduleWithFixedDelay with delay'() {
@@ -79,9 +80,9 @@ class MdcScheduledExecutorServiceSpec extends Specification {
         Runnable task = {}
 
         when:
-        executorService.scheduleWithFixedDelay(task, 0L)
+        executorService.scheduleWithFixedDelay(task, Duration.ZERO)
 
         then:
-        1 * delegate.scheduleWithFixedDelay(_ as MdcRunnable, 0L)
+        1 * delegate.scheduleWithFixedDelay(_ as MdcRunnable, Duration.ZERO)
     }
 }

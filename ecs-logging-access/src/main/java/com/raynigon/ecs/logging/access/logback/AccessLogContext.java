@@ -6,10 +6,7 @@ import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.BasicStatusManager;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.LifeCycleManager;
-import ch.qos.logback.core.spi.AppenderAttachable;
-import ch.qos.logback.core.spi.AppenderAttachableImpl;
-import ch.qos.logback.core.spi.LifeCycle;
-import ch.qos.logback.core.spi.LogbackLock;
+import ch.qos.logback.core.spi.*;
 import ch.qos.logback.core.status.StatusManager;
 import ch.qos.logback.core.util.ExecutorServiceUtil;
 import ch.qos.logback.core.util.StatusPrinter;
@@ -34,10 +31,12 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
     private final Map<String, Object> objects;
     private final URL configLocation;
     private final AppenderAttachableImpl<IAccessEvent> appenderContainer;
+    private SequenceNumberGenerator sequenceNumberGenerator;
 
     private ExecutorService executorService;
     private String contextName;
     private boolean started;
+    ;
 
     public AccessLogContext(AccessLogProperties config) {
         this(config, "access-log", AccessLogContext.class.getResource("/logback-access.xml"), new AppenderAttachableImpl<>());
@@ -152,6 +151,16 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
 
     public void register(LifeCycle component) {
         this.lifeCycleManager.register(component);
+    }
+
+    @Override
+    public SequenceNumberGenerator getSequenceNumberGenerator() {
+        return this.sequenceNumberGenerator;
+    }
+
+    @Override
+    public void setSequenceNumberGenerator(SequenceNumberGenerator sequenceNumberGenerator) {
+        this.sequenceNumberGenerator = sequenceNumberGenerator;
     }
 
     public ScheduledExecutorService getScheduledExecutorService() {
