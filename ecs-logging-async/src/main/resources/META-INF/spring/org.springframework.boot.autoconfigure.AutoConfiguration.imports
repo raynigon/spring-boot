@@ -1,0 +1,2 @@
+com.raynigon.ecs.logging.async.MdcExecutorConfiguration
+com.raynigon.ecs.logging.async.service.DefaultAsyncService

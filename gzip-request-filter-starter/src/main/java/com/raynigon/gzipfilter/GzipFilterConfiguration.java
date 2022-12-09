@@ -1,10 +1,12 @@
 package com.raynigon.gzipfilter;
 
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@AutoConfiguration
 class GzipFilterConfiguration {
 
     @Bean

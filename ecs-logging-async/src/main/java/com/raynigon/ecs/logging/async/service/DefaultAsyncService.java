@@ -3,11 +3,10 @@ package com.raynigon.ecs.logging.async.service;
 import com.raynigon.ecs.logging.async.executor.MdcForkJoinPool;
 import com.raynigon.ecs.logging.async.service.helper.SampleWrapper;
 import com.raynigon.ecs.logging.async.service.helper.TimerWrapper;
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.Timer;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.Callable;
@@ -16,6 +15,7 @@ import java.util.concurrent.ForkJoinTask;
 import java.util.function.Supplier;
 
 @Service
+@AutoConfiguration
 @RequiredArgsConstructor
 public class DefaultAsyncService implements AsyncService {
 

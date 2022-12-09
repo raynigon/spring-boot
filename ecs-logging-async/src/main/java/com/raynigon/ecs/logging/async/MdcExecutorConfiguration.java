@@ -8,6 +8,7 @@ import com.raynigon.ecs.logging.async.service.AsyncMetricsService;
 import com.raynigon.ecs.logging.async.service.MicrometerMetricsService;
 import com.raynigon.ecs.logging.async.service.NoOpMetricsService;
 import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,6 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 @Configuration
+@AutoConfiguration
 @EnableConfigurationProperties(AsyncLoggingConfiguration.class)
 public class MdcExecutorConfiguration {
 

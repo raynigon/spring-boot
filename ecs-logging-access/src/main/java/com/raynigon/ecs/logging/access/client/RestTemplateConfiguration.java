@@ -1,6 +1,7 @@
 package com.raynigon.ecs.logging.access.client;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpRequest;
@@ -11,6 +12,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Configuration
+@AutoConfiguration
 @RequiredArgsConstructor
 @ConditionalOnClass(value = {RestTemplate.class})
 public class RestTemplateConfiguration {
