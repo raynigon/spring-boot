@@ -1,11 +1,13 @@
 package com.raynigon.ecs.logging.access.server
 
+import org.springframework.boot.test.web.server.LocalServerPort
+import org.springframework.http.HttpStatus
+
 import static com.raynigon.ecs.logging.LoggingConstants.SESSION_ID_HEADER
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_HEADER
 
 import com.raynigon.ecs.logging.access.helper.RecordingEcsAccessEncoder
 import com.raynigon.ecs.logging.access.helper.Wait
-import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.HttpMethod
 import org.springframework.http.RequestEntity
 import org.springframework.util.LinkedMultiValueMap
@@ -36,7 +38,7 @@ abstract class AbstractTomcatSpec extends Specification {
         def result = restTemplate.exchange(requestEntity, String)
 
         then:
-        result.statusCodeValue == 200
+        result.statusCode == HttpStatus.OK
 
         and:
         Wait.wait(Duration.ofMillis(100), { RecordingEcsAccessEncoder.records.size() == 1 })
@@ -57,7 +59,7 @@ abstract class AbstractTomcatSpec extends Specification {
         def result = restTemplate.exchange(requestEntity, String)
 
         then:
-        result.statusCodeValue == 200
+        result.statusCode == HttpStatus.OK
 
         and:
         Wait.wait(Duration.ofMillis(100), { RecordingEcsAccessEncoder.records.size() == 1 })

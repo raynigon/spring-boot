@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping
 class EchoController {
 
-    @GetMapping
+    @GetMapping("/")
     String home() {
         return "Hello World!"
     }

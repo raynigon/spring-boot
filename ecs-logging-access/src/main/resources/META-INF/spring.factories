@@ -1,4 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.raynigon.ecs.logging.access.client.RestTemplateConfiguration,\
-com.raynigon.ecs.logging.access.server.TomcatAccessLogConfiguration,\
-com.raynigon.ecs.logging.access.server.AccessLogFilterConfiguration

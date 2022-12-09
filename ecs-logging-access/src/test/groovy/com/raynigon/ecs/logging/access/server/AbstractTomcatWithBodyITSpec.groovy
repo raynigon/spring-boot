@@ -5,6 +5,7 @@ import com.raynigon.ecs.logging.access.helper.RecordingEcsAccessEncoder
 import com.raynigon.ecs.logging.access.helper.Wait
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpStatus
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.web.client.RestTemplate
@@ -34,7 +35,7 @@ class AbstractTomcatWithBodyITSpec extends AbstractTomcatSpec {
         def result = restTemplate.getForEntity("http://localhost:$port/", String)
 
         then:
-        result.statusCodeValue == 200
+        result.statusCode == HttpStatus.OK
         result.body == "Hello World!"
 
         and:
@@ -54,7 +55,7 @@ class AbstractTomcatWithBodyITSpec extends AbstractTomcatSpec {
         def result = restTemplate.postForEntity("http://localhost:$port/echo", ["test": "123"], Map)
 
         then:
-        result.statusCodeValue == 200
+        result.statusCode == HttpStatus.OK
         result.body == ["test": "123"]
     }
 }

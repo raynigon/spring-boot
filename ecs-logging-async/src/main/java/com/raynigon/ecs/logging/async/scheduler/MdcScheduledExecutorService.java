@@ -6,6 +6,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.Trigger;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 import java.util.concurrent.ScheduledFuture;
 
@@ -19,33 +21,28 @@ public class MdcScheduledExecutorService implements TaskScheduler {
         return delegatedTaskScheduler.schedule(wrap(task), trigger);
     }
 
-    @NonNull
     @Override
-    public ScheduledFuture<?> schedule(@NonNull Runnable task, @NonNull Date startTime) {
+    public ScheduledFuture<?> schedule(Runnable task, Instant startTime) {
         return delegatedTaskScheduler.schedule(wrap(task), startTime);
     }
 
-    @NonNull
     @Override
-    public ScheduledFuture<?> scheduleAtFixedRate(@NonNull Runnable task, @NonNull Date startTime, long period) {
+    public ScheduledFuture<?> scheduleAtFixedRate(Runnable task, Instant startTime, Duration period) {
         return delegatedTaskScheduler.scheduleAtFixedRate(wrap(task), startTime, period);
     }
 
-    @NonNull
     @Override
-    public ScheduledFuture<?> scheduleAtFixedRate(@NonNull Runnable task, long period) {
+    public ScheduledFuture<?> scheduleAtFixedRate(Runnable task, Duration period) {
         return delegatedTaskScheduler.scheduleAtFixedRate(wrap(task), period);
     }
 
-    @NonNull
     @Override
-    public ScheduledFuture<?> scheduleWithFixedDelay(@NonNull Runnable task, @NonNull Date startTime, long delay) {
+    public ScheduledFuture<?> scheduleWithFixedDelay(Runnable task, Instant startTime, Duration delay) {
         return delegatedTaskScheduler.scheduleWithFixedDelay(wrap(task), startTime, delay);
     }
 
-    @NonNull
     @Override
-    public ScheduledFuture<?> scheduleWithFixedDelay(@NonNull Runnable task, long delay) {
+    public ScheduledFuture<?> scheduleWithFixedDelay(Runnable task, Duration delay) {
         return delegatedTaskScheduler.scheduleWithFixedDelay(wrap(task), delay);
     }
 

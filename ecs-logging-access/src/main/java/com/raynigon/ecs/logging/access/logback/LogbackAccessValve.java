@@ -13,7 +13,8 @@ import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 import org.slf4j.MDC;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Objects;
