@@ -8,17 +8,17 @@ This repository contains some usefull libraries which can enhance your spring bo
 ## ECS Logging
 The ecs-logging-* libraries provide the functionality to log messages as json documents in the [ECS format](https://www.elastic.co/guide/en/ecs/current/index.html).
 
-## ECS Logging - App
+### ECS Logging - App
 This library provides application logs in ECS format.
 
-## ECS Logging - Access
+### ECS Logging - Access
 This library provides access log functionality for tomcat.
 
-## ECS Logging - Audit
+### ECS Logging - Audit
 This library provides audit log functionality for the application.
 These loggers need to be managed manually.
 
-## ECS Logging - Async
+### ECS Logging - Async
 This library provides the functionality of the ECS application logs,
 for asynchronous processes (e.g. futures, or @Async annotated methods).
 
