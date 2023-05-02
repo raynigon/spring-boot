@@ -13,13 +13,16 @@ import ch.qos.logback.core.util.StatusPrinter;
 import com.raynigon.ecs.logging.access.AccessLogProperties;
 import com.raynigon.ecs.logging.access.context.IAccessLogContext;
 import com.raynigon.ecs.logging.access.event.EcsAccessEvent;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.logging.Logger;
 
+@Slf4j
 public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, AppenderAttachable<IAccessEvent> {
 
     private final AccessLogProperties config;
@@ -31,6 +34,7 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
     private final Map<String, Object> objects;
     private final URL configLocation;
     private final AppenderAttachableImpl<IAccessEvent> appenderContainer;
+    private final List<ConfigurationEventListener> eventListeners = new ArrayList<>();
     private SequenceNumberGenerator sequenceNumberGenerator;
 
     private ExecutorService executorService;
@@ -71,14 +75,14 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
     }
 
     public void start() {
-        executorService = ExecutorServiceUtil.newExecutorService();
+        executorService = ExecutorServiceUtil.newThreadPoolExecutor();
 
         try {
             JoranConfigurator jc = new JoranConfigurator();
             jc.setContext(this);
             jc.doConfigure(this.configLocation);
         } catch (Throwable e) {
-            //TODO handle exception
+            log.error("Unable to start access log", e);
         }
 
         StatusPrinter.printInCaseOfErrorsOrWarnings(this);
@@ -161,6 +165,16 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
     @Override
     public void setSequenceNumberGenerator(SequenceNumberGenerator sequenceNumberGenerator) {
         this.sequenceNumberGenerator = sequenceNumberGenerator;
+    }
+
+    @Override
+    public void addConfigurationEventListener(ConfigurationEventListener listener) {
+        eventListeners.add(listener);
+    }
+
+    @Override
+    public void fireConfigurationEvent(ConfigurationEvent configurationEvent) {
+        eventListeners.forEach((listener) -> listener.listen(configurationEvent));
     }
 
     public ScheduledExecutorService getScheduledExecutorService() {
