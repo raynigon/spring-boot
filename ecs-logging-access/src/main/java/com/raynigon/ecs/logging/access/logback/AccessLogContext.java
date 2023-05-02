@@ -34,6 +34,7 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
     private final Map<String, Object> objects;
     private final URL configLocation;
     private final AppenderAttachableImpl<IAccessEvent> appenderContainer;
+    private final List<ConfigurationEventListener> eventListeners = new ArrayList<>();
     private SequenceNumberGenerator sequenceNumberGenerator;
 
     private ExecutorService executorService;
@@ -74,7 +75,7 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
     }
 
     public void start() {
-        executorService = ExecutorServiceUtil.newExecutorService();
+        executorService = ExecutorServiceUtil.newThreadPoolExecutor();
 
         try {
             JoranConfigurator jc = new JoranConfigurator();
@@ -164,6 +165,16 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
     @Override
     public void setSequenceNumberGenerator(SequenceNumberGenerator sequenceNumberGenerator) {
         this.sequenceNumberGenerator = sequenceNumberGenerator;
+    }
+
+    @Override
+    public void addConfigurationEventListener(ConfigurationEventListener listener) {
+        eventListeners.add(listener);
+    }
+
+    @Override
+    public void fireConfigurationEvent(ConfigurationEvent configurationEvent) {
+        eventListeners.forEach((listener) -> listener.listen(configurationEvent));
     }
 
     public ScheduledExecutorService getScheduledExecutorService() {
