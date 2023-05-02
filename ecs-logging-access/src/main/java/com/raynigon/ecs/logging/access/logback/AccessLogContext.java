@@ -13,13 +13,16 @@ import ch.qos.logback.core.util.StatusPrinter;
 import com.raynigon.ecs.logging.access.AccessLogProperties;
 import com.raynigon.ecs.logging.access.context.IAccessLogContext;
 import com.raynigon.ecs.logging.access.event.EcsAccessEvent;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.logging.Logger;
 
+@Slf4j
 public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, AppenderAttachable<IAccessEvent> {
 
     private final AccessLogProperties config;
@@ -78,7 +81,7 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
             jc.setContext(this);
             jc.doConfigure(this.configLocation);
         } catch (Throwable e) {
-            //TODO handle exception
+            log.error("Unable to start access log", e);
         }
 
         StatusPrinter.printInCaseOfErrorsOrWarnings(this);
