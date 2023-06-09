@@ -13,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.raynigon.ecs.logging.LoggingConstants.*;
+
 public class EcsProducerInterceptor<K, V> implements ProducerInterceptor<K, V> {
 
     private String producerName = "unknown";
@@ -34,13 +36,17 @@ public class EcsProducerInterceptor<K, V> implements ProducerInterceptor<K, V> {
 
     @Override
     public ProducerRecord<K, V> onSend(ProducerRecord<K, V> record) {
-        String transactionId = MDC.get(LoggingConstants.TRANSACTION_ID_PROPERTY);
+        String transactionId = MDC.get(TRANSACTION_ID_PROPERTY);
         if (transactionId == null) {
             transactionId = UUID.randomUUID().toString();
         }
         Headers headers = record.headers();
-        headers.add(LoggingConstants.KAFKA_PRODUCER_NAME_HEADER, producerName.getBytes(StandardCharsets.UTF_8));
-        headers.add(LoggingConstants.KAFKA_TRANSACTION_ID_HEADER, transactionId.getBytes(StandardCharsets.UTF_8));
+        if (headers.lastHeader(KAFKA_PRODUCER_NAME_HEADER) == null){
+            headers.add(KAFKA_PRODUCER_NAME_HEADER, producerName.getBytes(StandardCharsets.UTF_8));
+        }
+        if (headers.lastHeader(KAFKA_TRANSACTION_ID_HEADER) == null) {
+            headers.add(KAFKA_TRANSACTION_ID_HEADER, transactionId.getBytes(StandardCharsets.UTF_8));
+        }
         return record;
     }
 
