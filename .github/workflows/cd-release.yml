@@ -57,12 +57,12 @@ jobs:
           template: |
             # What's Changed
             <!-- Features & Enhancements -->
-            {{#pull_requests.enhancement.length}}
+            {{#pull_requests.feature.length}}
             ## 🚀 Features & Enhancements
-            {{#pull_requests.enhancement }}
+            {{#pull_requests.feature }}
             * {{ title }} PR: #{{ number }}
-            {{/pull_requests.enhancement }}
-            {{/pull_requests.enhancement.length}}
+            {{/pull_requests.feature }}
+            {{/pull_requests.feature.length}}
             <!-- Bug Fixes -->
             {{#pull_requests.bug.length}}
             ## 🐛 Bug Fixes
