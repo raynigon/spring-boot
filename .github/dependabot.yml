@@ -30,6 +30,10 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "gradle"
+    directory: "/ecs-logging-kafka/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
     directory: "/gzip-request-filter-starter/"
     schedule:
       interval: "daily"
