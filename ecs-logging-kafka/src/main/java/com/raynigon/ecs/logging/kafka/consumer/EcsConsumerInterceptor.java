@@ -18,10 +18,14 @@ public class EcsConsumerInterceptor<K, V> implements ConsumerInterceptor<K, V> {
 
     @Override
     @SneakyThrows
-    public void configure(Map<String, ?> configs) {}
+    public void configure(Map<String, ?> configs) {
+        // Nothing has to be done here
+    }
 
     @Override
-    public void close() {}
+    public void close() {
+        // Nothing has to be done here
+    }
 
     @Override
     public void onCommit(Map<TopicPartition, OffsetAndMetadata> offsets) {
