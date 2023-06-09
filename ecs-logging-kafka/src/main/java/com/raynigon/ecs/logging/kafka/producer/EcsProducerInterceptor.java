@@ -1,7 +1,6 @@
 package com.raynigon.ecs.logging.kafka.producer;
 
 
-import com.raynigon.ecs.logging.LoggingConstants;
 import com.raynigon.ecs.logging.kafka.ApplicationNameProvider;
 import org.apache.kafka.clients.producer.ProducerInterceptor;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -11,21 +10,22 @@ import org.slf4j.MDC;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import static com.raynigon.ecs.logging.LoggingConstants.*;
 
 public class EcsProducerInterceptor<K, V> implements ProducerInterceptor<K, V> {
 
-    private String producerName = null;
+    private String producerNameHolder = null;
 
     @Override
     public void configure(Map<String, ?> configs) {
         Object value = configs.get(EcsProducerConfigs.PRODUCER_NAME_CONFIG);
         if (value instanceof String) {
-            producerName = (String) value;
+            producerNameHolder = (String) value;
         } else {
-            producerName = ApplicationNameProvider.getApplicationName();
+            producerNameHolder = ApplicationNameProvider.getApplicationName();
         }
     }
 
@@ -36,6 +36,7 @@ public class EcsProducerInterceptor<K, V> implements ProducerInterceptor<K, V> {
 
     @Override
     public ProducerRecord<K, V> onSend(ProducerRecord<K, V> record) {
+        String producerName = getProducerName();
         String transactionId = MDC.get(TRANSACTION_ID_PROPERTY);
         if (transactionId == null) {
             transactionId = UUID.randomUUID().toString();
@@ -56,13 +57,10 @@ public class EcsProducerInterceptor<K, V> implements ProducerInterceptor<K, V> {
     }
 
     public String getProducerName() {
-        if (producerName != null) {
-            return producerName;
+        if (producerNameHolder != null) {
+            return producerNameHolder;
         }
-        producerName = ApplicationNameProvider.getApplicationName();
-        if (producerName == null) {
-            return "unknown";
-        }
-        return producerName;
+        producerNameHolder = ApplicationNameProvider.getApplicationName();
+        return Objects.requireNonNullElse(producerNameHolder, "unknown");
     }
 }
