@@ -17,16 +17,16 @@ import static com.raynigon.ecs.logging.LoggingConstants.*;
 
 public class EcsProducerInterceptor<K, V> implements ProducerInterceptor<K, V> {
 
-    private String producerName = "unknown";
+    private String producerName = null;
 
     @Override
     public void configure(Map<String, ?> configs) {
         Object value = configs.get(EcsProducerConfigs.PRODUCER_NAME_CONFIG);
         if (value instanceof String) {
             producerName = (String) value;
-            return;
+        } else {
+            producerName = ApplicationNameProvider.getApplicationName();
         }
-        producerName = ApplicationNameProvider.getApplicationName();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class EcsProducerInterceptor<K, V> implements ProducerInterceptor<K, V> {
             transactionId = UUID.randomUUID().toString();
         }
         Headers headers = record.headers();
-        if (headers.lastHeader(KAFKA_PRODUCER_NAME_HEADER) == null){
+        if (headers.lastHeader(KAFKA_PRODUCER_NAME_HEADER) == null) {
             headers.add(KAFKA_PRODUCER_NAME_HEADER, producerName.getBytes(StandardCharsets.UTF_8));
         }
         if (headers.lastHeader(KAFKA_TRANSACTION_ID_HEADER) == null) {
@@ -53,5 +53,16 @@ public class EcsProducerInterceptor<K, V> implements ProducerInterceptor<K, V> {
     @Override
     public void onAcknowledgement(RecordMetadata metadata, Exception exception) {
         // Nothing has to be done here
+    }
+
+    public String getProducerName() {
+        if (producerName != null) {
+            return producerName;
+        }
+        producerName = ApplicationNameProvider.getApplicationName();
+        if (producerName == null) {
+            return "unknown";
+        }
+        return producerName;
     }
 }
