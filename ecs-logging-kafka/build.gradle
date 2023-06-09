@@ -1,0 +1,12 @@
+dependencies {
+    implementation project(':ecs-logging-base')
+    implementation("org.slf4j:slf4j-api")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    compileOnly("org.springframework.kafka:spring-kafka")
+
+    testImplementation("org.springframework.kafka:spring-kafka")
+    testImplementation("org.springframework.kafka:spring-kafka-test")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:spock")
+    testImplementation("org.testcontainers:kafka")
+}
