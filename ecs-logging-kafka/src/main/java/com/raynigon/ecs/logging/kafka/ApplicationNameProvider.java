@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationNameProvider {
 
-    private static String sApplicationName = "unknown";
+    private static String sApplicationName = null;
 
     @Value("${spring.application.name}")
     private String applicationName;
