@@ -44,7 +44,9 @@ public class EcsConsumerInterceptor<K, V> implements ConsumerInterceptor<K, V> {
         ConsumerRecord<K, V> record = records.iterator().next();
         // Add MDC Tags and debug log for traceability
         MDC.put(KAFKA_TOPIC_PROPERTY, record.topic());
-        MDC.put(KAFKA_KAFKA_KEY_PROPERTY, record.key().toString());
+        if (record.key() != null) {
+            MDC.put(KAFKA_KAFKA_KEY_PROPERTY, record.key().toString());
+        }
         return records;
     }
 }
