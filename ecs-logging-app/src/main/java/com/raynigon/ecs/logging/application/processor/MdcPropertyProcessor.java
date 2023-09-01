@@ -13,7 +13,9 @@ public class MdcPropertyProcessor implements ApplicationEventProcessor {
     @Override
     public EcsApplicationLogEvent process(EcsApplicationLogEvent result, ILoggingEvent event) {
         Map<String, String> mdcPropertyMap = event.getMDCPropertyMap();
+        // Check if properties exist, if not return the result
         if (mdcPropertyMap == null || mdcPropertyMap.isEmpty()) return result;
+        // Convert to HashMap
         Map<String, String> labels = new HashMap<>(mdcPropertyMap);
 
         String transactionId = extractProperty(labels, TRANSACTION_ID_PROPERTY);
