@@ -20,6 +20,7 @@ class EcsApplicationEncoderSpec extends Specification {
         context.putProperty(SERVICE_NAME_PROPERTY, "my-service")
         Logger logger = new Logger("logger.class", null, context)
         ILoggingEvent event = new LoggingEvent("logger.class", logger, Level.INFO, "", null, null)
+        event.setMDCPropertyMap([:])
 
         when:
         def binaryResult = encoder.encode(event)
