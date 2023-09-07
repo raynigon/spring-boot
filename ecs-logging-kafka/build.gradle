@@ -6,6 +6,8 @@ dependencies {
 
     testImplementation("org.springframework.kafka:spring-kafka")
     testImplementation("org.springframework.kafka:spring-kafka-test")
+    testImplementation("ch.qos.logback:logback-core")
+    testImplementation("ch.qos.logback:logback-classic")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:spock")
     testImplementation("org.testcontainers:kafka")

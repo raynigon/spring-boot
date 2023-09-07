@@ -15,7 +15,7 @@ public class ApplicationNameProvider {
     private String applicationName;
 
     @PostConstruct
-    void init(){
+    public void init(){
         sApplicationName = applicationName;
     }
 
