@@ -6,4 +6,6 @@ dependencies {
 
     testImplementation("ch.qos.logback:logback-core")
     testImplementation("ch.qos.logback:logback-classic")
+    testImplementation("com.squareup.okhttp3:okhttp:4.12.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

@@ -12,7 +12,7 @@ import java.util.UUID;
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_HEADER;
 import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY;
 
-class RequestIdInterceptor implements Interceptor {
+class EcsTransactionIdInterceptor implements Interceptor {
 
     @NotNull
     @Override
