@@ -1,15 +1,15 @@
 package com.raynigon.ecs.logging.okhttp3
 
+import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_HEADER
+import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
+
 import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.Response
-import org.slf4j.MDC;
+import org.slf4j.MDC
 import spock.lang.Specification
 import spock.lang.Subject
 import okhttp3.Interceptor
-
-import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_HEADER
-import static com.raynigon.ecs.logging.LoggingConstants.TRANSACTION_ID_PROPERTY
 
 class EcsTransactionIdInterceptorSpec extends Specification {
 
