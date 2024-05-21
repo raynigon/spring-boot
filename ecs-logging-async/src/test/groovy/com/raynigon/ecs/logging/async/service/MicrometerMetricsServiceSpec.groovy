@@ -9,7 +9,11 @@ class MicrometerMetricsServiceSpec extends Specification {
     SimpleMeterRegistry meterRegistry = new SimpleMeterRegistry()
 
     @Subject
-    MicrometerMetricsService service = new MicrometerMetricsService(meterRegistry)
+    MicrometerMetricsService service = new MicrometerMetricsService()
+
+    def setup() {
+        ((MicrometerMetricsService) service).bindTo(meterRegistry)
+    }
 
     def "create queue timer"() {
         when:

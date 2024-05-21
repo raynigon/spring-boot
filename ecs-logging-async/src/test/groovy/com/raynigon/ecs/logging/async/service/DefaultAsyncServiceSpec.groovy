@@ -16,10 +16,14 @@ class DefaultAsyncServiceSpec extends Specification {
 
     SimpleMeterRegistry meterRegistry = new SimpleMeterRegistry()
 
-    AsyncMetricsService metricsService = new MicrometerMetricsService(meterRegistry)
+    AsyncMetricsService metricsService = new MicrometerMetricsService()
 
     @Subject
     AsyncService service = new DefaultAsyncService(pool, metricsService)
+
+    def setup() {
+        ((MicrometerMetricsService) metricsService).bindTo(meterRegistry)
+    }
 
     def 'supplyAsync gets executed'() {
         given:

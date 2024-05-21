@@ -64,8 +64,8 @@ public class MdcExecutorConfiguration {
     @Bean
     @ConditionalOnClass(MeterRegistry.class)
     @ConditionalOnProperty(name = "raynigon.logging.async.metrics.enabled", havingValue = "true")
-    public AsyncMetricsService micrometerAsyncMetricsService(MeterRegistry meterRegistry){
-        return new MicrometerMetricsService(meterRegistry);
+    public AsyncMetricsService micrometerAsyncMetricsService(){
+        return new MicrometerMetricsService();
     }
 
     @Bean

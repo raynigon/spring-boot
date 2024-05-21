@@ -18,7 +18,6 @@ import static com.raynigon.ecs.logging.LoggingConstants.*;
 public class EcsConsumerInterceptor<K, V> implements ConsumerInterceptor<K, V> {
 
     @Override
-    @SneakyThrows
     public void configure(Map<String, ?> configs) {
         // Nothing has to be done here
     }
