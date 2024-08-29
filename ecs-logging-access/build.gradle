@@ -1,10 +1,11 @@
 dependencies {
     implementation(project(':ecs-logging-base'))
-    implementation("ch.qos.logback:logback-access:1.5.7")
+    implementation('ch.qos.logback.access:common:2.0.2')
+    implementation("ch.qos.logback.access:tomcat:2.0.2")
     compileOnly("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.springframework.boot:spring-boot-starter-webflux")
 
-    testImplementation("ch.qos.logback:logback-access:1.5.7")
+    testImplementation("ch.qos.logback.access:common:2.0.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")

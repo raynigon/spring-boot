@@ -4,8 +4,8 @@ import static com.raynigon.ecs.logging.LoggingConstants.SERVICE_NAME_PROPERTY
 
 import java.time.Duration
 
-import ch.qos.logback.access.spi.IAccessEvent
-import ch.qos.logback.access.spi.ServerAdapter
+import ch.qos.logback.access.common.spi.IAccessEvent
+import ch.qos.logback.access.common.spi.ServerAdapter
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.raynigon.ecs.logging.access.context.IAccessLogContext
 import com.raynigon.ecs.logging.access.event.EcsAccessEvent

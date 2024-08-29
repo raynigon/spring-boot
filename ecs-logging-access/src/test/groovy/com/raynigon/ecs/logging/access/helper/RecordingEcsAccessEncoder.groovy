@@ -1,6 +1,6 @@
 package com.raynigon.ecs.logging.access.helper
 
-import ch.qos.logback.access.spi.IAccessEvent
+import ch.qos.logback.access.common.spi.IAccessEvent
 import com.raynigon.ecs.logging.access.EcsAccessEncoder
 
 import java.time.Instant

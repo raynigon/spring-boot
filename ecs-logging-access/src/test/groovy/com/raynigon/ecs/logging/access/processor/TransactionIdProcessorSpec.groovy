@@ -1,6 +1,6 @@
 package com.raynigon.ecs.logging.access.processor
 
-import ch.qos.logback.access.spi.IAccessEvent
+import ch.qos.logback.access.common.spi.IAccessEvent
 import com.raynigon.ecs.logging.access.event.EcsAccessLogEvent
 import spock.lang.Specification
 import spock.lang.Subject

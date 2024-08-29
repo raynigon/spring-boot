@@ -1,7 +1,7 @@
 package com.raynigon.ecs.logging.access.logback;
 
-import ch.qos.logback.access.joran.JoranConfigurator;
-import ch.qos.logback.access.spi.IAccessEvent;
+import ch.qos.logback.access.common.joran.JoranConfigurator;
+import ch.qos.logback.access.common.spi.IAccessEvent;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.BasicStatusManager;
 import ch.qos.logback.core.Context;
@@ -20,14 +20,14 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
-import java.util.logging.Logger;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
 public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, AppenderAttachable<IAccessEvent> {
 
     private final AccessLogProperties config;
     private final long birthTime;
-    private final LogbackLock configurationLock;
+    private final ReentrantLock configurationLock;
     private final LifeCycleManager lifeCycleManager;
     private final StatusManager statusManager;
     private final Map<String, String> properties;
@@ -57,7 +57,7 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
         this.configLocation = configLocation;
         this.appenderContainer = appenderContainer;
         this.birthTime = System.currentTimeMillis();
-        this.configurationLock = new LogbackLock();
+        this.configurationLock = new ReentrantLock();
         this.lifeCycleManager = new LifeCycleManager();
         this.statusManager = new BasicStatusManager();
         this.properties = new HashMap<>();
@@ -102,6 +102,11 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
         return this.started;
     }
 
+    @Override
+    public void addSubstitutionProperty(String s, String s1) {
+        properties.put(s, s1);
+    }
+
     public String getProperty(String key) {
         Objects.requireNonNull(key);
         return properties.get(key);
@@ -128,6 +133,11 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
         return Collections.unmodifiableMap(this.properties);
     }
 
+    @Override
+    public void addSubstitutionProperties(Properties props) {
+        IAccessLogContext.super.addSubstitutionProperties(props);
+    }
+
     public StatusManager getStatusManager() {
         return this.statusManager;
     }
@@ -145,7 +155,7 @@ public class AccessLogContext implements IAccessLogContext, LifeCycle, Context, 
         return this.birthTime;
     }
 
-    public Object getConfigurationLock() {
+    public ReentrantLock getConfigurationLock() {
         return this.configurationLock;
     }
 

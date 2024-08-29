@@ -1,6 +1,6 @@
 package com.raynigon.ecs.logging.access.server;
 
-import ch.qos.logback.access.servlet.TeeFilter;
+import ch.qos.logback.access.common.servlet.TeeFilter;
 import com.raynigon.ecs.logging.access.AccessLogProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
