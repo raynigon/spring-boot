@@ -1,7 +1,9 @@
 dependencies {
     implementation(project(':ecs-logging-base'))
     implementation('ch.qos.logback.access:common:2.0.2')
-    implementation("ch.qos.logback.access:tomcat:2.0.2")
+    implementation("ch.qos.logback.access:tomcat:2.0.2"){
+        exclude group: 'org.apache.tomcat'
+    }
     compileOnly("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.springframework.boot:spring-boot-starter-webflux")
 
