@@ -1,6 +1,6 @@
 dependencies {
     implementation(project(':ecs-logging-base'))
-    implementation("org.slf4j:slf4j-api:2.0.13")
+    implementation("org.slf4j:slf4j-api:2.0.16")
     compileOnly("com.squareup.okhttp3:okhttp:4.12.0")
     compileOnly("ch.qos.logback:logback-core")
 
