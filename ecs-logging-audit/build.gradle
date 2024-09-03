@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(':ecs-logging-base')
+    api(project(':ecs-logging-base'))
     compileOnly("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-web")
 }
