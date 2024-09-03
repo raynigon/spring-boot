@@ -1,7 +1,7 @@
 package com.raynigon.ecs.logging.access.event;
 
-import ch.qos.logback.access.spi.AccessEvent;
-import ch.qos.logback.access.spi.ServerAdapter;
+import ch.qos.logback.access.common.spi.AccessEvent;
+import ch.qos.logback.access.common.spi.ServerAdapter;
 import com.raynigon.ecs.logging.access.context.IAccessLogContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
