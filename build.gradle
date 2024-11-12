@@ -8,7 +8,7 @@ plugins {
     id 'java-library'
     id 'signing'
     id 'maven-publish'
-    id 'org.springframework.boot' version '3.3.3'
+    id 'org.springframework.boot' version '3.3.5'
     id 'io.spring.dependency-management' version '1.1.6'
 
     // Auto Update Versions
@@ -71,10 +71,10 @@ subprojects {
 
         // Spock
         testImplementation(platform("org.spockframework:spock-bom:2.4-M4-groovy-4.0"))
-        testImplementation("org.apache.groovy:groovy:4.0.22")
+        testImplementation("org.apache.groovy:groovy:4.0.24")
         testImplementation("org.spockframework:spock-core")
         testImplementation("org.spockframework:spock-spring")
-        testRuntimeOnly("net.bytebuddy:byte-buddy:1.15.1")
+        testRuntimeOnly("net.bytebuddy:byte-buddy:1.15.10")
 
         // Lombok
         compileOnly("org.projectlombok:lombok:1.18.34")
