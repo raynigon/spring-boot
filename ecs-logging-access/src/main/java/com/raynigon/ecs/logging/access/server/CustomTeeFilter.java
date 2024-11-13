@@ -28,9 +28,7 @@ public class CustomTeeFilter implements Filter {
                 TeeHttpServletRequest teeRequest = new TeeHttpServletRequest((HttpServletRequest) request);
                 TeeHttpServletResponse teeResponse = new TeeHttpServletResponse((HttpServletResponse) response);
 
-                // System.out.println("BEFORE TeeFilter. filterChain.doFilter()");
                 filterChain.doFilter(teeRequest, teeResponse);
-                // System.out.println("AFTER TeeFilter. filterChain.doFilter()");
 
                 teeResponse.finish();
                 // let the output contents be available for later use by
@@ -56,11 +54,12 @@ public class CustomTeeFilter implements Filter {
         String localhostName = getLocalhostName();
 
         active = computeActivation(localhostName, includeListAsStr, excludeListAsStr);
-        if (active)
+        // Log the activation status on stdout, because loggers cannot be used here
+        if (active) {
             System.out.println("TeeFilter will be ACTIVE on this host [" + localhostName + "]");
-        else
+        } else {
             System.out.println("TeeFilter will be DISABLED on this host [" + localhostName + "]");
-
+        }
     }
 
     public static List<String> extractNameList(String nameListAsStr) {
@@ -96,18 +95,18 @@ public class CustomTeeFilter implements Filter {
     public static boolean computeActivation(String hostname, String includeListAsStr, String excludeListAsStr) {
         List<String> includeList = extractNameList(includeListAsStr);
         List<String> excludeList = extractNameList(excludeListAsStr);
-        boolean inIncludesList = mathesIncludesList(hostname, includeList);
-        boolean inExcludesList = mathesExcludesList(hostname, excludeList);
+        boolean inIncludesList = matchesIncludesList(hostname, includeList);
+        boolean inExcludesList = matchesExcludesList(hostname, excludeList);
         return inIncludesList && (!inExcludesList);
     }
 
-    static boolean mathesIncludesList(String hostname, List<String> includeList) {
+    static boolean matchesIncludesList(String hostname, List<String> includeList) {
         if (includeList.isEmpty())
             return true;
         return includeList.contains(hostname);
     }
 
-    static boolean mathesExcludesList(String hostname, List<String> excludesList) {
+    static boolean matchesExcludesList(String hostname, List<String> excludesList) {
         if (excludesList.isEmpty())
             return false;
         return excludesList.contains(hostname);
