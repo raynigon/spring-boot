@@ -1,13 +1,13 @@
 dependencies {
     api(project(':ecs-logging-base'))
-    api("ch.qos.logback.access:common:2.0.3")
-    api("ch.qos.logback.access:tomcat:2.0.3"){
+    api("ch.qos.logback.access:logback-access-common:2.0.6")
+    api("ch.qos.logback.access:logback-access-tomcat:2.0.6"){
         exclude group: 'org.apache.tomcat'
     }
     compileOnly("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.springframework.boot:spring-boot-starter-webflux")
 
-    testImplementation("ch.qos.logback.access:common:2.0.3")
+    testImplementation("ch.qos.logback.access:logback-access-common:2.0.6")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
