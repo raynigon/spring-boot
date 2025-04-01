@@ -77,9 +77,9 @@ subprojects {
         testRuntimeOnly("net.bytebuddy:byte-buddy:1.17.4")
 
         // Lombok
-        compileOnly("org.projectlombok:lombok:1.18.36")
-        testImplementation("org.projectlombok:lombok:1.18.36")
-        annotationProcessor("org.projectlombok:lombok:1.18.36")
+        compileOnly("org.projectlombok:lombok:1.18.38")
+        testImplementation("org.projectlombok:lombok:1.18.38")
+        annotationProcessor("org.projectlombok:lombok:1.18.38")
     }
 }
 
