@@ -1,3 +1,45 @@
+/*
+ * The plugin comes with defaults that are useful to myself. You should configure it to behave as you please:
+ */
+publishOnCentral {
+    repoOwner.set("raynigon")
+    projectDescription.set("A reasonable description")
+    // The following values are the default, if they are ok with you, just omit them
+    projectLongName.set(project.name)
+    licenseName.set("Apache License, Version 2.0")
+    licenseUrl.set("http://www.apache.org/licenses/LICENSE-2.0")
+    projectUrl.set("https://github.com/${repoOwner.get()}/spring-boot")
+    scmConnection.set("scm:git:https://github.com/${repoOwner.get()}spring-boot")
+}
+
+/*
+ * Developers and contributors must be added manually
+ */
+publishing {
+    publications {
+        withType(MavenPublication.class).tap {
+            configureEach {
+                pom {
+                    developers {
+                        developer {
+                            name = "Simon Schneider"
+                            email = "opensource@raynigon.de"
+                            url = "https://www.raynigon.com/"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*
+ * The plugin automatically adds every publication to the list of objects to sign
+ * The configuration of the signing process is left to the user, though,
+ * as in a normal Gradle build.
+ * In the following example, in-memory signing is configured.
+ * For further options, please refer to: https://docs.gradle.org/current/userguide/signing_plugin.html
+ */
 signing {
     required {
         findProperty("signingKey") != null
@@ -5,61 +47,4 @@ signing {
     String signingKey = findProperty("signingKey")
     String signingPassword = findProperty("signingPassword")
     useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "OSSRH" // OSS Repository Hosting
-            url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
-            credentials {
-                username = System.getenv("OSSRH_USERNAME") ?: null
-                password = System.getenv("OSSRH_PASSWORD") ?: null
-            }
-
-        }
-    }
-    publications {
-        create("maven", MavenPublication) {
-            artifactId = project.name
-
-            from components.java
-            artifact tasks.sourcesJar
-            artifact tasks.javadocJar
-
-            pom {
-                name = project.name
-                description = "The ${project.name} is a part of the unit-api"
-                url = 'https://github.com/raynigon/spring-boot/'
-                issueManagement {
-                    system = 'GitHub'
-                    url = 'https://github.com/raynigon/spring-boot/issues'
-                }
-                licenses {
-                    license {
-                        name = 'Apache-2.0'
-                        url = 'https://opensource.org/licenses/Apache-2.0'
-                    }
-                }
-                scm {
-                    url = 'https://github.com/raynigon/spring-boot/'
-                    connection = 'scm:git:git://github.com/raynigon/spring-boot.git'
-                    developerConnection = 'scm:git:ssh://git@github.com/raynigon/spring-boot.git'
-                }
-                developers {
-                    developer {
-                        id = 'raynigon'
-                        name = 'Simon Schneider'
-                        email = 'opensource@raynigon.de'
-                    }
-                }
-            }
-            // Remove Spring Boot Dependency Management
-            pom.withXml {
-                def rootNode = asNode()
-                rootNode.remove((Node) ((Node) rootNode).get("dependencyManagement").get(0))
-            }
-        }
-    }
 }
