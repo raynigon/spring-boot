@@ -29,6 +29,7 @@ public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecy
     private boolean requestAttributesEnabled = true;
 
     public LogbackAccessValve(AccessLogProperties config, String serviceName) {
+        super(true);
         Objects.requireNonNull(config);
         this.config = config;
         context = new AccessLogContext(config);
