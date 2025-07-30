@@ -17,15 +17,13 @@ publishOnCentral {
  */
 publishing {
     publications {
-        withType(MavenPublication.class).tap {
-            configureEach {
-                pom {
-                    developers {
-                        developer {
-                            name = "Simon Schneider"
-                            email = "opensource@raynigon.de"
-                            url = "https://www.raynigon.com/"
-                        }
+        withType(MavenPublication.class) {
+            pom {
+                developers {
+                    developer {
+                        name = "Simon Schneider"
+                        email = "opensource@raynigon.de"
+                        url = "https://www.raynigon.com/"
                     }
                 }
             }
