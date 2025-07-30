@@ -17,9 +17,6 @@ plugins {
 
     // Auto Release
     id('net.researchgate.release') version '3.1.0'
-
-    // Maven Central
-    id("org.danilopianini.publish-on-central") version "9.1.0"
 }
 
 allprojects {
