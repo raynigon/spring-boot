@@ -15,6 +15,8 @@ jobs:
         with:
           java-version: 21
           distribution: adopt
+      - name: "Setup gradle"
+        uses: "gradle/actions/setup-gradle@v4.3.0"
       - id: vars
         name: "Determine Tag Name"
         run: |
@@ -28,11 +30,7 @@ jobs:
           git config --global user.name "raynigon[bot]"
           git checkout -b release
       - name: "Publish Artifacts"
-        uses: eskatos/gradle-command-action@v3.5.0 #v1.3.3
-        with:
-          arguments: ":release -Prelease.useAutomaticVersion=true build -x test"
-          wrapper-cache-enabled: true
-          dependencies-cache-enabled: true
+        run: "./gradlew :release -Prelease.useAutomaticVersion=true build -x test"
         env:
           GITHUB_USERNAME: raynigon
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
