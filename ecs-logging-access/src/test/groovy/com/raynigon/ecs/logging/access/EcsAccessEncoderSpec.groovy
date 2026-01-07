@@ -1,12 +1,13 @@
 package com.raynigon.ecs.logging.access
 
+import tools.jackson.databind.ObjectMapper
+
 import static com.raynigon.ecs.logging.LoggingConstants.SERVICE_NAME_PROPERTY
 
 import java.time.Duration
 
 import ch.qos.logback.access.common.spi.IAccessEvent
 import ch.qos.logback.access.common.spi.ServerAdapter
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.raynigon.ecs.logging.access.context.IAccessLogContext
 import com.raynigon.ecs.logging.access.event.EcsAccessEvent
 import spock.lang.Specification

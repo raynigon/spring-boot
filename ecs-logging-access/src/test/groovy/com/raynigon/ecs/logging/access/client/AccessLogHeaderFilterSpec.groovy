@@ -24,7 +24,7 @@ class AccessLogHeaderFilterSpec extends Specification {
         filter.accept(headers)
 
         then:
-        headers.containsKey(TRANSACTION_ID_HEADER)
+        headers.containsHeader(TRANSACTION_ID_HEADER)
     }
 
     def 'transaction id gets copied to x-request-id header'() {
