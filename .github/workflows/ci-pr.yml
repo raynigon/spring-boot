@@ -6,8 +6,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4.7.1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5.1.0
         with:
           java-version: 21
           distribution: adopt
@@ -16,7 +16,7 @@ jobs:
         with:
           arguments: test
       - name: "Upload Test Logs Artifact"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: unit-test-logs
@@ -37,8 +37,8 @@ jobs:
   javadoc:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4.7.1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5.1.0
         with:
           java-version: 21
           distribution: adopt

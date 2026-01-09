@@ -2,28 +2,27 @@ package com.raynigon.ecs.logging;
 
 import ch.qos.logback.core.Context;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.StdDateFormat;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.raynigon.ecs.logging.converter.EventConverter;
 import com.raynigon.ecs.logging.converter.LogbackConverter;
 import com.raynigon.ecs.logging.event.EcsLogEvent;
 import lombok.SneakyThrows;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.util.StdDateFormat;
 
 import java.nio.charset.StandardCharsets;
 
 public class EcsEncoder<I, O extends EcsLogEvent> {
 
     private final EventConverter<I, O> converter;
-    private final ObjectMapper objectMapper;
+    private final JsonMapper jsonMapper;
 
     public EcsEncoder(EventConverter<I, O> converter) {
         this.converter = converter;
 
-        this.objectMapper = new ObjectMapper();
-        this.objectMapper.registerModule(new JavaTimeModule());
-        this.objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        this.objectMapper.setDateFormat((new StdDateFormat()).withColonInTimeZone(true));
+        this.jsonMapper = JsonMapper.builder()
+                .changeDefaultPropertyInclusion((JsonInclude.Value a) -> JsonInclude.Value.construct(JsonInclude.Include.NON_NULL, JsonInclude.Include.NON_NULL))
+                .defaultDateFormat((new StdDateFormat()).withColonInTimeZone(true))
+                .build();
     }
 
     public void setupLogback(Context context) {
@@ -39,7 +38,7 @@ public class EcsEncoder<I, O extends EcsLogEvent> {
 
     @SneakyThrows
     private byte[] writeEvent(EcsLogEvent event) {
-        byte[] jsonb = objectMapper.writeValueAsBytes(event);
+        byte[] jsonb = jsonMapper.writeValueAsBytes(event);
         byte[] newLine = "\n".getBytes(StandardCharsets.UTF_8);
         byte[] result = new byte[jsonb.length + newLine.length];
         System.arraycopy(jsonb, 0, result, 0, jsonb.length);

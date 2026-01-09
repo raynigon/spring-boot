@@ -7,16 +7,16 @@ jobs:
     name: "Build Release"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: "Setup Java JDK"
-        uses: actions/setup-java@v4.7.1
+        uses: actions/setup-java@v5.1.0
         with:
           java-version: 21
           distribution: adopt
       - name: "Setup gradle"
-        uses: "gradle/actions/setup-gradle@v4.3.0"
+        uses: "gradle/actions/setup-gradle@v5.0.0"
       - id: vars
         name: "Determine Tag Name"
         run: |
@@ -90,7 +90,7 @@ jobs:
             {{/pull_requests.dependencies}}
             {{/pull_requests.dependencies.length}}
       - name: "Github Release"
-        uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 #v2.3.2
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b #v2.5.0
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:

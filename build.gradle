@@ -8,12 +8,12 @@ plugins {
     id 'java-library'
     id 'signing'
     id 'maven-publish'
-    id 'org.springframework.boot' version '3.5.4'
+    id 'org.springframework.boot' version '4.0.1'
     id 'io.spring.dependency-management' version '1.1.7'
 
     // Auto Update Versions
-    id 'se.patrikerdes.use-latest-versions' version '0.2.18'
-    id 'com.github.ben-manes.versions' version '0.52.0'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.19'
+    id 'com.github.ben-manes.versions' version '0.53.0'
 
     // Auto Release
     id('net.researchgate.release') version '3.1.0'
@@ -67,19 +67,19 @@ subprojects {
 
     dependencies {
         // Commons Lang
-        api("org.apache.commons:commons-lang3:3.18.0")
+        api("org.apache.commons:commons-lang3:3.20.0")
 
         // Spock
         testImplementation(platform("org.spockframework:spock-bom:2.4-M6-groovy-4.0"))
         testImplementation("org.apache.groovy:groovy:4.0.28")
         testImplementation("org.spockframework:spock-core")
         testImplementation("org.spockframework:spock-spring")
-        testRuntimeOnly("net.bytebuddy:byte-buddy:1.17.6")
+        testRuntimeOnly("net.bytebuddy:byte-buddy:1.18.3")
 
         // Lombok
-        compileOnly("org.projectlombok:lombok:1.18.38")
-        testImplementation("org.projectlombok:lombok:1.18.38")
-        annotationProcessor("org.projectlombok:lombok:1.18.38")
+        compileOnly("org.projectlombok:lombok:1.18.42")
+        testImplementation("org.projectlombok:lombok:1.18.42")
+        annotationProcessor("org.projectlombok:lombok:1.18.42")
     }
 }
 

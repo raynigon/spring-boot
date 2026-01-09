@@ -30,7 +30,7 @@ publishing {
 
             pom {
                 name = project.name
-                description = "The ${project.name} is a part of the unit-api"
+                description = "The ${project.name} is a part spring boot utils"
                 url = 'https://github.com/raynigon/spring-boot/'
                 issueManagement {
                     system = 'GitHub'

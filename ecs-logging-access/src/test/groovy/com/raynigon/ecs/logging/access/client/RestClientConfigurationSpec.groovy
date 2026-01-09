@@ -90,7 +90,7 @@ class RestClientConfigurationSpec extends Specification {
         client.get().uri("https://google.com").retrieve().toBodilessEntity()
 
         then: "The transaction id is added to the request"
-        headers.containsKey(TRANSACTION_ID_HEADER)
+        headers.containsHeader(TRANSACTION_ID_HEADER)
         headers.get(TRANSACTION_ID_HEADER).first() == "test-123"
     }
 }

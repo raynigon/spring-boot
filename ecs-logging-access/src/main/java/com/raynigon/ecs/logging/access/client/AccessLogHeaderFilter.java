@@ -17,10 +17,10 @@ public class AccessLogHeaderFilter implements Consumer<HttpHeaders> {
         if (correlationId == null) {
             correlationId = UUID.randomUUID().toString();
         }
-        if (!headers.containsKey(TRANSACTION_ID_HEADER)) {
+        if (!headers.containsHeader(TRANSACTION_ID_HEADER)) {
             headers.add(TRANSACTION_ID_HEADER, correlationId);
         }
-        if (sessionId != null && !headers.containsKey(SESSION_ID_HEADER)) {
+        if (sessionId != null && !headers.containsHeader(SESSION_ID_HEADER)) {
             headers.add(SESSION_ID_HEADER, sessionId);
         }
     }

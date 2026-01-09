@@ -33,7 +33,7 @@ class AbstractTomcatWithoutBodyITSpec extends AbstractTomcatSpec {
         def result = restTemplate.getForEntity("http://localhost:$port/", String)
 
         then:
-        result.statusCodeValue == 200
+        result.statusCode.value() == 200
         result.body == "Hello World!"
 
         and:
