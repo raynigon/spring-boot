@@ -8,5 +8,5 @@ dependencies {
     }
 
     // Jackson
-    compileOnly("tools.jackson.core:jackson-databind:3.0.3")
+    compileOnly("tools.jackson.core:jackson-databind:3.0.4")
 }
