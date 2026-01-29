@@ -16,7 +16,7 @@ jobs:
           java-version: 21
           distribution: adopt
       - name: "Setup gradle"
-        uses: "gradle/actions/setup-gradle@v5.0.0"
+        uses: "gradle/actions/setup-gradle@v5.0.1"
       - id: vars
         name: "Determine Tag Name"
         run: |
