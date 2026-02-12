@@ -21,8 +21,11 @@ plugins {
 
 allprojects {
     group = 'com.raynigon.spring-boot'
-    // version = project.version
-    sourceCompatibility = '21'
+
+    java {
+        sourceCompatibility = 21
+    }
+
     repositories {
         mavenCentral()
     }
@@ -39,8 +42,11 @@ subprojects {
     apply plugin: 'signing'
     apply plugin: 'net.researchgate.release'
 
-    sourceCompatibility = 21
-    targetCompatibility = 21
+    java {
+        sourceCompatibility = 21
+        targetCompatibility = 21
+    }
+
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
 
