@@ -114,4 +114,4 @@ jobs:
           -b 'Release ${{ steps.vars.outputs.tag }} on ${{ steps.vars.outputs.date }}' \
           -r 'raynigon'
         env:
-          GH_TOKEN: "${{ secrets.BROSE_GITHUB_TOKEN }}"
+          GH_TOKEN: "${{ github.token }}"
