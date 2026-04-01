@@ -80,7 +80,7 @@ subprojects {
         testImplementation("org.apache.groovy:groovy:5.0.5")
         testImplementation("org.spockframework:spock-core")
         testImplementation("org.spockframework:spock-spring")
-        testRuntimeOnly("net.bytebuddy:byte-buddy:1.18.7")
+        testRuntimeOnly("net.bytebuddy:byte-buddy:1.18.8")
 
         // Lombok
         compileOnly("org.projectlombok:lombok:1.18.44")
