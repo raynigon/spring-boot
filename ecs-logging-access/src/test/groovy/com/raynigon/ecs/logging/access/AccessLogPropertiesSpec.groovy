@@ -84,7 +84,7 @@ class AccessLogPropertiesSpec extends Specification {
         String result = properties.toString()
 
         then: "The hashCodes are equal"
-        result == "AccessLogProperties(excludeEndpoints=[], exportBody=false, bodySizeLimit=10000)"
+        result == "AccessLogProperties(excludeEndpoints=[], exportBody=false, bodySizeLimit=10000, excludeMultipartBody=true)"
     }
 
     def "Exclude Endpoints setter works correctly"() {
@@ -120,5 +120,24 @@ class AccessLogPropertiesSpec extends Specification {
 
         then: "The hashCodes are equal"
         properties.isExportBody()
+    }
+
+    def "Exclude multipart body defaults to true"() {
+        given: "AccessLogProperties object gets created"
+        AccessLogProperties properties = new AccessLogProperties()
+
+        expect: "multipart body export is excluded by default"
+        properties.isExcludeMultipartBody()
+    }
+
+    def "Exclude multipart body setter works correctly"() {
+        given: "AccessLogProperties object gets created"
+        AccessLogProperties properties = new AccessLogProperties()
+
+        when: "The setter is called"
+        properties.setExcludeMultipartBody(false)
+
+        then: "The value is updated"
+        !properties.isExcludeMultipartBody()
     }
 }

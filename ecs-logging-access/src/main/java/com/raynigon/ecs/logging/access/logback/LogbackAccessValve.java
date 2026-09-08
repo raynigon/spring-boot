@@ -5,6 +5,7 @@ import com.raynigon.ecs.logging.access.AccessLogProperties;
 import com.raynigon.ecs.logging.access.context.IAccessLogContext;
 import com.raynigon.ecs.logging.access.event.EcsAccessEvent;
 import com.raynigon.ecs.logging.access.server.AccessValve;
+import com.raynigon.ecs.logging.access.server.EcsLoggingRequestAttributes;
 import lombok.SneakyThrows;
 import org.apache.catalina.Lifecycle;
 import org.apache.catalina.Valve;
@@ -39,6 +40,9 @@ public class LogbackAccessValve extends ValveBase implements AccessValve, Lifecy
     @Override
     public void log(Request request, Response response, long time) {
         if (config.getExcludeEndpoints().contains(request.getRequestURI())) {
+            return;
+        }
+        if (Boolean.TRUE.equals(request.getAttribute(EcsLoggingRequestAttributes.SKIP_ACCESS_LOGGING))) {
             return;
         }
         TomcatServerAdapter adapter = new TomcatServerAdapter(request, response);
