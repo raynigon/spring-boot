@@ -18,6 +18,9 @@ This library provides application logs in ECS format.
 ### ECS Logging - Access
 
 This library provides access log functionality for tomcat.
+See the [module README](ecs-logging-access/README.md) for configuration properties
+(including multipart request handling) and the `@EcsSkipBodyLogging` /
+`@EcsSkipAccessLogging` annotations.
 
 ### ECS Logging - Audit
 
