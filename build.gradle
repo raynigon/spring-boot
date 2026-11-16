@@ -73,7 +73,7 @@ subprojects {
 
     dependencies {
         // Commons Lang
-        api("org.apache.commons:commons-lang3:3.21.0")
+        api("org.apache.commons:commons-lang3:3.22.0")
 
         // Spock
         testImplementation(platform("org.spockframework:spock-bom:2.5-groovy-5.0"))
