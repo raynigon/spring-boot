@@ -1,7 +1,7 @@
 dependencies {
     api(project(':ecs-logging-base'))
     api("ch.qos.logback.access:logback-access-common:2.0.15")
-    api("ch.qos.logback.access:logback-access-tomcat:2.0.15"){
+    api("ch.qos.logback.access:logback-access-tomcat:2.0.16"){
         exclude group: 'org.apache.tomcat'
     }
     compileOnly("org.springframework.boot:spring-boot-starter-web")
